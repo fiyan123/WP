@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -46,7 +46,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Status</p>
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                 @if($konseling->konfirmasi === 'setuju') bg-green-100 text-green-800
                                 @elseif($konseling->konfirmasi === 'tolak') bg-red-100 text-red-800
                                 @else bg-yellow-100 text-yellow-800
@@ -93,7 +93,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-600">Status Pengaduan</p>
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                 @if($konseling->pengaduan->status === 'selesai') bg-green-100 text-green-800
                                 @elseif($konseling->pengaduan->status === 'ditolak') bg-red-100 text-red-800
                                 @else bg-yellow-100 text-yellow-800
@@ -112,7 +112,7 @@
     </div>
 
     <!-- Hidden data container for JavaScript -->
-    <div id="instruktur-data" 
+    <div id="instruktur-data"
          data-instruktur="{{ json_encode($instrukturs) }}"
          data-current-konselor="{{ $konseling->nama_konselor }}"
          style="display: none;">
@@ -146,4 +146,61 @@
             });
         </script>
     @endpush
-</x-app-layout> 
+</x-app-layout>  --}}
+
+@extends('template.main')
+@section('content_template')
+
+<section class="bg-white py-6 px-4 sm:px-6 lg:px-8">
+    <!-- Breadcrumb -->
+    <nav class="text-sm text-gray-600 font-semibold mb-6" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2">
+            <li><a href="{{ url('/') }}" class="text-blue-600 hover:underline">Homepage</a></li>
+            <li class="text-gray-600">/</li>
+            <li><a href="#" class="text-blue-600 hover:underline">Layanan</a></li>
+            <li class="text-gray-600">/</li>
+            <li><a href="{{ url('/konseling') }}" class="text-blue-600 hover:underline">Konseling</a></li>
+            <li class="text-gray-600">/</li>
+            <li class="text-gray-500">Detail</li>
+        </ol>
+    </nav>
+
+    <!-- Detail Box -->
+    <div class="bg-white shadow rounded-lg p-6 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-gray-800">
+            <div>
+                <p class="font-semibold">ID Pengaduan</p>
+                <p>10082874</p>
+            </div>
+            <div>
+                <p class="font-semibold">Nama Korban</p>
+                <p>Aisyah Nanda</p>
+            </div>
+            <div>
+                <p class="font-semibold">Tanggal</p>
+                <p>15-02-2025</p>
+            </div>
+            <div>
+                <p class="font-semibold">Waktu</p>
+                <p>10:00</p>
+            </div>
+            <div>
+                <p class="font-semibold">Jenis Pelayanan</p>
+                <p>Kekerasan terhadap perempuan</p>
+            </div>
+            <div>
+                <p class="font-semibold">Status</p>
+                <p>Ditolak</p>
+            </div>
+        </div>
+
+        <div class="mt-6 text-end">
+            <a href="{{ url('/konseling/create') }}"
+               class="bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
+                Buat Jadwal Baru
+            </a>
+        </div>
+    </div>
+</section>
+
+@endsection

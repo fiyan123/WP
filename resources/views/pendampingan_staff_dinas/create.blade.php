@@ -71,13 +71,12 @@
         </div>
 
         <!-- Tombol -->
-        <div class="mt-6 flex justify-end gap-4">
-            <a href="{{ url('/pendampingan') }}"
-                class="bg-gray-100 text-gray-700 text-sm font-semibold py-2 px-4 rounded hover:bg-gray-200">
+        <div class="flex justify-center mt-6 gap-4">
+            <a href="{{ url('/pendampingan') }}" type="button"
+                class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">
                 Batal
             </a>
-            <button type="submit"
-                class="bg-blue-600 text-white text-sm font-semibold py-2 px-6 rounded hover:bg-blue-700">
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
                 Simpan
             </button>
         </div>

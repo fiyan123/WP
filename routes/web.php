@@ -67,10 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Konseling routes (index dan show, dapat diakses umum)
     Route::prefix('konseling')->name('konseling.')->group(function () {
         Route::get('/', [KonselingController::class, 'index'])->name('index');
-
-        Route::get('create', [KonselingController::class, 'create'])->name('create');
-
+        Route::get('/create', [KonselingController::class, 'create'])->name('create');
         Route::get('/{id}', [KonselingController::class, 'show'])->name('show');
+        Route::get('/konfirmasi/{id}', [KonselingController::class, 'showkonfirmasi'])->name('showkonfirmasi');
         Route::put('/{id}/konfirmasi', [KonselingController::class, 'updateKonfirmasi'])->name('update-konfirmasi');
     });
 

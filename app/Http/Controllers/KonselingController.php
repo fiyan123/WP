@@ -16,12 +16,12 @@ class KonselingController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         if (!$user) {
-            $konselings = collect(); 
+            $konselings = collect();
             return view('konseling.index', compact('konselings'));
         }
-        
+
         if ($user->role === 'staff') {
             $konselings = Konseling::with(['pengaduan', 'korban'])
                 ->orderBy('jadwal_konseling', 'desc')
@@ -34,7 +34,7 @@ class KonselingController extends Controller
             ->orderBy('jadwal_konseling', 'desc')
             ->get();
         }
-        
+
         return view('konseling.index', compact('konselings'));
     }
 
@@ -130,18 +130,23 @@ class KonselingController extends Controller
 
     public function show($id)
     {
-        $konseling = Konseling::with(['pengaduan', 'korban'])->findOrFail($id);
-        
-        // Check if user has permission to view this counseling session
-        $user = Auth::user();
-        if ($user->role !== 'staff' && $konseling->pengaduan->user_id !== $user->id) {
-            abort(403, 'Unauthorized action.');
-        }
+        // $konseling = Konseling::with(['pengaduan', 'korban'])->findOrFail($id);
 
-        // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
-        $instrukturs = instruktur::all();
+        // // Check if user has permission to view this counseling session
+        // $user = Auth::user();
+        // if ($user->role !== 'staff' && $konseling->pengaduan->user_id !== $user->id) {
+        //     abort(403, 'Unauthorized action.');
+        // }
 
-        return view('konseling.show', compact('konseling', 'instrukturs'));
+        // // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
+        // $instrukturs = instruktur::all();
+
+        // return view('konseling.show', compact('konseling', 'instrukturs'));
+        return view('konseling.show');
+    }
+    public function showkonfirmasi($id)
+    {
+        return view('konseling.konfirmasi');
     }
 
     public function edit($id)
@@ -269,7 +274,7 @@ class KonselingController extends Controller
             if ($konseling->pengaduan->user_id !== $user->id) {
                 abort(403, 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
             }
-            
+
             $request->validate([
                 'konfirmasi' => ['required', Rule::in([
                     'setuju',
@@ -293,7 +298,7 @@ class KonselingController extends Controller
     public function requestForm()
     {
         $user = Auth::user();
-        
+
         if ($user->role === 'staff') {
             return redirect()->route('konseling.index')->with('error', 'Staff tidak dapat mengajukan konseling.');
         }
@@ -317,7 +322,7 @@ class KonselingController extends Controller
     public function requestCounseling(Request $request)
     {
         $user = Auth::user();
-        
+
         if ($user->role === 'staff') {
             return redirect()->route('konseling.index')->with('error', 'Staff tidak dapat mengajukan konseling.');
         }

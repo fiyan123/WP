@@ -76,11 +76,11 @@
                             <!-- Tanggal Konseling -->
                             <div>
                                 <x-input-label for="tanggal_konseling" :value="__('Tanggal Konseling')" />
-                                <x-text-input id="tanggal_konseling" 
-                                             class="block mt-1 w-full" 
-                                             type="date" 
-                                             name="tanggal_konseling" 
-                                             :value="old('tanggal_konseling')" 
+                                <x-text-input id="tanggal_konseling"
+                                             class="block mt-1 w-full"
+                                             type="date"
+                                             name="tanggal_konseling"
+                                             :value="old('tanggal_konseling')"
                                              required />
                                 <x-input-error class="mt-2" :messages="$errors->get('tanggal_konseling')" />
                             </div>
@@ -88,11 +88,11 @@
                             <!-- Waktu Konseling -->
                             <div>
                                 <x-input-label for="waktu_konseling" :value="__('Waktu Konseling')" />
-                                <x-text-input id="waktu_konseling" 
-                                             class="block mt-1 w-full" 
-                                             type="time" 
-                                             name="waktu_konseling" 
-                                             :value="old('waktu_konseling')" 
+                                <x-text-input id="waktu_konseling"
+                                             class="block mt-1 w-full"
+                                             type="time"
+                                             name="waktu_konseling"
+                                             :value="old('waktu_konseling')"
                                              required />
                                 <p class="mt-1 text-sm text-gray-500">Pilih waktu (format: HH:MM dalam 24 jam)</p>
                                 <x-input-error class="mt-2" :messages="$errors->get('waktu_konseling')" />
@@ -102,11 +102,11 @@
                         <!-- Tempat Konseling -->
                         <div>
                             <x-input-label for="tempat_konseling" :value="__('Tempat Konseling')" />
-                            <x-text-input id="tempat_konseling" 
-                                         class="block mt-1 w-full" 
-                                         type="text" 
-                                         name="tempat_konseling" 
-                                         :value="old('tempat_konseling')" 
+                            <x-text-input id="tempat_konseling"
+                                         class="block mt-1 w-full"
+                                         type="text"
+                                         name="tempat_konseling"
+                                         :value="old('tempat_konseling')"
                                          required />
                             <x-input-error class="mt-2" :messages="$errors->get('tempat_konseling')" />
                         </div>
@@ -126,7 +126,7 @@
     </div>
 
     <!-- Hidden data container for JavaScript -->
-    <div id="pengaduan-data" 
+    <div id="pengaduan-data"
          data-pengaduan="{{ json_encode($pengaduans->map(function($pengaduan) {
              return [
                  'id' => $pengaduan->id,
@@ -165,7 +165,7 @@
 
             function updateKorbanOptions() {
                 const selectedPengaduanId = pengaduanSelect.value;
-                
+
                 // Reset korban dropdown
                 korbanSelect.innerHTML = '<option value="">Pilih Korban</option>';
                 korbanSelect.disabled = true;
@@ -174,7 +174,7 @@
                 if (selectedPengaduanId) {
                     // Cari pengaduan yang dipilih
                     const selectedPengaduan = pengaduanData.find(p => p.id == selectedPengaduanId);
-                    
+
                     if (selectedPengaduan) {
                         if (selectedPengaduan.korban && selectedPengaduan.korban.length > 0) {
                             // Tambah semua korban untuk pengaduan ini
@@ -195,7 +195,7 @@
 
             function updateNamaKonselorOptions() {
                 const selectedLayanan = jenisLayananSelect.value;
-                
+
                 // Reset nama konselor dropdown
                 namaKonselorSelect.innerHTML = '<option value="">Pilih Nama Konselor</option>';
                 namaKonselorSelect.disabled = true;
@@ -212,12 +212,12 @@
                             const option = document.createElement('option');
                             option.value = instruktur.nama;
                             option.textContent = instruktur.nama + ' - ' + instruktur.posisi;
-                            
+
                             // Set selected if this is the old value
                             if (oldNamaKonselor && instruktur.nama === oldNamaKonselor) {
                                 option.selected = true;
                             }
-                            
+
                             namaKonselorSelect.appendChild(option);
                         });
                         namaKonselorSelect.disabled = false;
@@ -239,7 +239,7 @@
             form.addEventListener('submit', function(e) {
                 const korbanId = korbanSelect.value;
                 const pengaduanId = pengaduanSelect.value;
-                
+
                 console.log('Form submission attempt:', {
                     pengaduan_id: pengaduanId,
                     korban_id: korbanId
@@ -248,7 +248,7 @@
                 if (!korbanId || !pengaduanId) {
                     e.preventDefault();
                     alert('Silakan pilih pengaduan dan korban terlebih dahulu');
-                    
+
                     // Highlight field yang error
                     if (!pengaduanId) {
                         pengaduanSelect.classList.add('border-red-500');
@@ -275,76 +275,89 @@
     </script>
     @endpush
 </x-app-layout>  --}}
-
 @extends('template.main')
-
 @section('content_template')
-    <section class="bg-white p-6 rounded-md shadow">
-        <!-- Breadcrumb -->
-        <nav class="text-sm text-gray-600 font-semibold mb-4" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-2">
-                <li><a href="{{ url('/') }}" class="text-blue-600 hover:underline">Homepage</a></li>
-                <li>/</li>
-                <li><a href="#" class="text-blue-600 hover:underline">Layanan</a></li>
-                <li>/</li>
-                <li><a href="#" class="text-blue-600 hover:underline">Konseling</a></li>
-                <li>/</li>
-                <li class="text-gray-500">Buat Jadwal</li>
-            </ol>
-        </nav>
 
-        <h2 class="font-bold text-lg mb-4 mt-10">Layanan Konseling Korban</h2>
+<section class="bg-white py-6 px-4 sm:px-6 lg:px-8">
+    <!-- Breadcrumb -->
+<nav class="text-sm text-gray-600 font-semibold mb-6" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-2">
+        <li><a href="{{ url('/') }}" class="text-blue-600 hover:underline">Homepage</a></li>
+        <li class="text-gray-600">/</li>
+        <li><a href="#" class="text-blue-600 hover:underline">Layanan</a></li>
+        <li class="text-gray-600">/</li>
+        <li><a href="{{ url('/konseling') }}" class="text-blue-600 hover:underline">Konseling</a></li>
+        <li class="text-gray-600">/</li>
+        <li class="text-gray-500">Buat Jadwal</li>
+    </ol>
+</nav>
 
-        <div class="border border-gray-300 p-4 rounded-md space-y-2 bg-white">
 
-            <form action="#" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                @csrf
+    <!-- Form -->
+    <form method="POST" action="#" class="bg-white shadow-md rounded-lg p-6">
+        @csrf
+        <h2 class="text-lg font-semibold text-gray-800 mb-6">Layanan Konseling Korban</h2>
 
-                <!-- ID Pengaduan -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">ID Pengaduan</label>
-                    <select name="pengaduan_id" class="w-full border rounded p-2" required>
-                        <option value="">Pilih ID Pengaduan</option>
-                    </select>
-                </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- ID Pengaduan -->
+            <div>
+                <label class="block font-semibold text-gray-800 mb-1">ID Pengaduan</label>
+                <input type="text" name="id_pengaduan" placeholder="ID Pengaduan"
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
+            </div>
 
-                <!-- Nama Korban -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">Nama Korban</label>
-                    <input type="text" class="w-full border rounded p-2" name="nama_korban"
-                        value="{{ old('nama_korban') }}">
-                </div>
+            <!-- Nama Korban -->
+            <div>
+                <label class="block font-semibold text-gray-800 mb-1">Nama Korban</label>
+                <input type="text" name="nama_korban" placeholder="Nama Korban"
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
+            </div>
 
-                <!-- Tanggal Konseling -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">Tanggal Konseling *</label>
-                    <input type="date" name="tanggal" class="w-full border rounded p-2" required>
-                </div>
+            <!-- Tanggal konseling -->
+            <div>
+                <label class="block font-semibold text-gray-800 mb-1">Tanggal Konseling *</label>
+                <input type="date" name="tanggal_konseling"
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
+            </div>
 
-                <!-- Waktu Konseling -->
-                <div>
-                    <label class="block text-sm font-medium mb-1">Waktu Konseling *</label>
-                    <input type="time" name="waktu" class="w-full border rounded p-2" required>
-                </div>
+            <!-- Waktu konseling -->
+            <div>
+                <label class="block font-semibold text-gray-800 mb-1">Waktu Konseling *</label>
+                <select name="waktu_konseling"
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                    <option value="" selected disabled>-- Pilih Waktu --</option>
+                    <option value="08:00">08:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="15:00">15:00</option>
+                </select>
+            </div>
 
-                <!-- Jenis Pelayanan -->
-                <div class="md:col-span-2">
-                    <label class="block text-sm font-medium mb-1">Jenis Pelayanan *</label>
-                    <select name="jenis_pelayanan" class="w-full border rounded p-2" required>
-                        <option value="">Pilih Jenis Pelayanan</option>
-                        <option value="Asesmen Psikologis">Asesmen Psikologis</option>
-                        <option value="Intervensi Psikologis">Intervensi Psikologis</option>
-                    </select>
-                </div>
-
-                <!-- Tombol -->
-                <div class="md:col-span-2 flex justify-center gap-2 mt-4">
-                    <a href="{{ route('konseling.index') }}"
-                        class="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-400">Batal</a>
-                    <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-600">Simpan</button>
-                </div>
-            </form>
+            <!-- Jenis Pelayanan -->
+            <div class="sm:col-span-2">
+                <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan</label>
+                <select name="jenis_pelayanan"
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                    <option value="" selected disabled>Jenis Pelayanan</option>
+                    <option value="Layanan Hukum">Layanan Hukum</option>
+                    <option value="Layanan Kesehatan">Layanan Kesehatan</option>
+                    <option value="Layanan Rehabilitasi Sosial">Layanan Rehabilitasi Sosial</option>
+                    <option value="Layanan Reintegrasi Sosial">Layanan Reintegrasi Sosial</option>
+                </select>
+            </div>
         </div>
-    </section>
+
+        <!-- Tombol -->
+        <div class="flex justify-center mt-6 gap-4">
+            <a href="{{ url('/konseling') }}" type="button"
+                class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">
+                Batal
+            </a>
+            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+                Simpan
+            </button>
+        </div>
+    </form>
+</section>
+
 @endsection
