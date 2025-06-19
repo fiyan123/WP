@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CustomDashboardController;
 use App\Http\Controllers\DataDashboardController;
 use App\Http\Controllers\AnalyticsDashboardController;
+use App\Http\Controllers\KelolaDataController;
 
 // Public Routes
 Route::get('/', function () {
@@ -42,6 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/data-dashboard', [DataDashboardController::class, 'index'])->name('data-dashboard.index');
     Route::get('/analytics', [AnalyticsDashboardController::class, 'index'])->name('analytics.index');
     Route::get('/analytics/data', [AnalyticsDashboardController::class, 'getAnalyticsData'])->name('analytics.data');
+
+    // Kelola Data routes
+    Route::get('/kelola-data', [KelolaDataController::class, 'index'])->name('kelolaData');
 
     // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
