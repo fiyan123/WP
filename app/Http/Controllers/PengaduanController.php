@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 class PengaduanController extends Controller
 {
     public function index(){
-        return view('pengaduan.index');
+        // dd();
+        return view('pengaduan_staf_dinas.index');
     }
     // Menampilkan form pengaduan dan memilih kota
     public function create()

@@ -38,7 +38,7 @@
                 d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-          <div id="dropdown-menu"
+          {{-- <div id="dropdown-menu"
             class="absolute left-0 mt-2 w-48 hidden bg-white shadow-lg rounded-md z-50">
             <a href="{{ route('pengaduan.create') }}"
               class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pengaduan</a>
@@ -48,22 +48,39 @@
               class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pendampingan</a>
             <a href="{{ route('konseling.index') }}"
               class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Konseling</a>
-          </div>
+          </div> --}}
+          <div id="dropdown-menu" class="absolute left-0 mt-2 w-48 hidden bg-white shadow-lg rounded-md z-50">
+                {{-- @if(Auth::user()->role === 'staf_dinas')
+                <a href="{{ route('pengaduan.create') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pengaduan</a>
+                <a href="{{ route('tracking.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Track Pengaduan</a>
+                <a href="{{ route('pendampingan.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pendampingan</a>
+                <a href="{{ route('konseling.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Konseling</a>
+                @endif --}}
+                {{-- @php
+
+                    dd(Auth::user());
+                @endphp --}}
+                {{-- @if(Auth::user()->role === 'staff') --}}
+                <a href="{{ route('pengaduan.create') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pengaduan</a>
+                <a href="{{ route('tracking.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Track Pengaduan</a>
+                <a href="{{ route('pendampingan.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Pendampingan</a>
+                <a href="{{ route('konseling.index') }}"
+                    class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Layanan Konseling</a>
+                {{-- @endif --}}
+            </div>
+
         </div>
 
         <a href="#" class="hover:text-blue-600">Edukasi</a>
         <a href="#" class="hover:text-blue-600">About</a>
       </div>
-
-      <!-- Menu Login/Register di Ujung Kanan -->
-      {{-- <div
-        class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0 text-center md:text-left">
-        <a href="{{ route('login') }}"
-          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
-        <a href="{{ route('register') }}"
-          class="border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-50">Register</a>
-      </div> --}}
-      <!-- Menu Login/Register di Ujung Kanan -->
     <div
     class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0 text-center md:text-left">
 
