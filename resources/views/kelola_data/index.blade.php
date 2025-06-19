@@ -18,7 +18,7 @@
         <div class="border border-gray-300 p-4 rounded-md space-y-2 bg-white">
             <div class="flex justify-between items-center">
                 <p class="font-semibold text-gray-700">Wilayah</p>
-                <button onclick="toggleEdit('wilayah')" id="wilayahEditBtn"
+                <button onclick="toggleWilayahEdit()" id="wilayahEditBtn"
                     class="text-blue-600 text-sm hover:underline">Edit</button>
             </div>
 
@@ -29,33 +29,61 @@
                 <div class="border border-dotted p-2 rounded-md ml-6">Kecamatan Bojongsoang</div>
                 <div class="border border-dotted p-2 rounded-md ml-8">Kelurahan Bojongsari</div>
             </div>
+        </div>
 
-            <!-- Edit Mode -->
-            <div id="wilayahForm" class="hidden space-y-2">
-                <div class="border border-dotted p-2 rounded-md ml-2">Provinsi Jawa Barat</div>
+        <!-- Edit Mode (Hidden at start) -->
+        <div id="wilayahCheckboxForm" class="hidden border border-gray-300 p-4 rounded-md space-y-2 bg-white mt-4">
+            <p class="font-semibold text-gray-700 mb-2">Pilih Wilayah</p>
 
-                <div class="border border-dotted p-2 rounded-md ml-4">
-                    <label for="kota" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
-                    <select id="kota" name="kota" class="w-full bg-white border-none focus:outline-none">
-                        <option>--Pilih Kota--</option>
-                        <option>Kota Bandung</option>
-                    </select>
-                </div>
+            <!-- Provinsi -->
+            <div>
+                <label class="flex items-center font-semibold">
+                    <input type="checkbox" class="mr-2"> Provinsi Jawa Barat
+                </label>
+                <button type="button" onclick="toggleWilayah('kotaJabar')" class="ml-6 text-xl font-bold">+</button>
 
-                <div class="border border-dotted p-2 rounded-md ml-6">
-                    <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                    <select id="kecamatan" name="kecamatan" class="w-full bg-white border-none focus:outline-none">
-                        <option>--Pilih Kecamatan--</option>
-                        <option>Bojongsoang</option>
-                    </select>
-                </div>
+                <!-- Kota -->
+                <div id="kotaJabar" class="ml-6 mt-2 hidden">
+                    <label class="flex items-center font-medium">
+                        <input type="checkbox" class="mr-2"> Kota Bandung
+                    </label>
+                    <button type="button" onclick="toggleWilayah('kecamatanBandung')"
+                        class="ml-6 text-xl font-bold">+</button>
 
-                <div class="border border-dotted p-2 rounded-md ml-8">
-                    <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa</label>
-                    <select id="desa" name="desa" class="w-full bg-white border-none focus:outline-none">
-                        <option>--Pilih Desa--</option>
-                        <option>Bojongsari</option>
-                    </select>
+                    <!-- Kecamatan -->
+                    <div id="kecamatanBandung" class="ml-6 mt-2 hidden">
+                        <label class="flex items-center font-medium">
+                            <input type="checkbox" class="mr-2"> Kecamatan Andir
+                        </label>
+                        <button type="button" onclick="toggleWilayah('kelurahanAndir')"
+                            class="ml-6 text-xl font-bold">+</button>
+
+                        <!-- Kelurahan -->
+                        <div id="kelurahanAndir" class="ml-6 mt-2 hidden space-y-1">
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan
+                                Campaka</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan
+                                Ciriyon</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan
+                                Dunguscariang</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan Garuda</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan
+                                Kebonjeruk</label>
+                            <label class="flex items-center"><input type="checkbox" class="mr-2"> Kelurahan
+                                Maleber</label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-4">
+                        <button class="bg-green-600 text-white px-4 py-2 rounded">Simpan Perubahan</button>
+                        <div class="flex space-x-2">
+                            <button onclick="hapusCheckboxWilayah()" class="bg-blue-600 text-white px-4 py-2 rounded">Hapus
+                                Data</button>
+                            <button onclick="toggleWilayahEdit()"
+                                class="bg-blue-300 text-white px-4 py-2 rounded">Sembunyikan
+                                Data</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,10 +116,14 @@
                 <div class="flex items-center space-x-2"><input type="checkbox" id="jk5"><label
                         for="jk5">Kekerasan Terhadap Perempuan</label></div>
                 <div class="text-blue-600 text-xl font-bold cursor-pointer">+</div>
-                <div class="flex space-x-2 mt-4">
+                <div class="flex justify-between items-center mt-4">
                     <button class="bg-green-600 text-white px-4 py-2 rounded">Simpan Perubahan</button>
-                    <button onclick="toggleEdit('jenis')"
-                        class="bg-blue-500 text-white px-4 py-2 rounded">Sembunyikan</button>
+                    <div class="flex space-x-2">
+                        <button onclick="hapusCheckboxWilayah()" class="bg-blue-600 text-white px-4 py-2 rounded">Hapus
+                            Data</button>
+                        <button onclick="toggleWilayahEdit()" class="bg-blue-300 text-white px-4 py-2 rounded">Sembunyikan
+                            Data</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,16 +156,41 @@
                 <div class="flex items-center space-x-2"><input type="checkbox" id="bk5"><label
                         for="bk5">Berbasis Online</label></div>
                 <div class="text-blue-600 text-xl font-bold cursor-pointer">+</div>
-                <div class="flex space-x-2 mt-4">
+                <div class="flex justify-between items-center mt-4">
                     <button class="bg-green-600 text-white px-4 py-2 rounded">Simpan Perubahan</button>
-                    <button onclick="toggleEdit('bentuk')"
-                        class="bg-blue-500 text-white px-4 py-2 rounded">Sembunyikan</button>
+                    <div class="flex space-x-2">
+                        <button onclick="hapusCheckboxWilayah()" class="bg-blue-600 text-white px-4 py-2 rounded">Hapus
+                            Data</button>
+                        <button onclick="toggleWilayahEdit()" class="bg-blue-300 text-white px-4 py-2 rounded">Sembunyikan
+                            Data</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <script>
+        function toggleWilayahEdit() {
+            const view = document.getElementById('wilayahView');
+            const form = document.getElementById('wilayahCheckboxForm');
+            const btn = document.getElementById('wilayahEditBtn');
+
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+                view.classList.add('hidden');
+                btn.textContent = 'Batal';
+            } else {
+                form.classList.add('hidden');
+                view.classList.remove('hidden');
+                btn.textContent = 'Edit';
+            }
+        }
+
+        function toggleWilayah(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('hidden');
+        }
+
         function toggleEdit(section) {
             const view = document.getElementById(section + 'View');
             const form = document.getElementById(section + 'Form');
