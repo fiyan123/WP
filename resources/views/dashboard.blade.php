@@ -18,89 +18,94 @@
 
 @extends('template.main')
 @section('content_template')
-    <!-- Hero Section -->
-    <div class="container-fluid">
-        <section class="bg-gradient-to-br from-blue-100 via-blue-200 to-indigo-200 py-20">
-            <div class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center justify-center gap-12">
-                <!-- Text Section -->
-                <div class="md:w-1/2 text-center md:text-left">
-                    <h1 class="text-5xl font-bold text-gray-800 leading-tight mb-4">SAPA</h1>
-                    <h2 class="text-2xl font-semibold text-gray-700 mb-6">Sahabat Perempuan dan Anak</h2>
-                    <p class="text-gray-600 text-base mb-8 leading-relaxed">
-                        SAPA hadir sebagai layanan responsif untuk mendampingi perempuan dan anak dalam situasi darurat
-                        maupun kebutuhan pendampingan khusus.
-                    </p>
-                    <a href="{{ route('pengaduan.create') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition">
-                        Learn More
-                    </a>
-                </div>
-
-                <!-- Image Section -->
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="{{ asset('assets/image.png') }}" alt="image" class="w-80 h-80 object-contain">
-                </div>
-            </div>
-        </section>
-    </div>
-
-
     <!-- Services Section -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Layanan</h2>
-            <p class="text-center text-gray-600 text-lg mb-12">Pilihan Layanan dari SAPA untuk Pelapor</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <!-- Layanan Pengaduan Card -->
-                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Layanan Pengaduan</h3>
-                    <p class="text-gray-600 mb-6">Menerapkan metode pembelajaran adaptif yang dapat membantu Code
-                        Friends untuk memaksimalkan pemahaman terhadap penerapan dari bahasa pemrograman.</p>
-                    <a href="{{ route('pengaduan.create') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition hover:underline">More
-                    </a>
+            <!-- Card Statistik -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Laporan Masuk -->
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <p class="text-gray-600 text-sm">Laporan Masuk</p>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">28,324</h2>
                 </div>
 
-                <!-- Track Pengaduan Card -->
-                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Track Pengaduan</h3>
-                    <p class="text-gray-600 mb-6">Menerapkan metode pembelajaran adaptif yang dapat membantu Code
-                        Friends untuk memaksimalkan pemahaman terhadap penerapan dari bahasa pemrograman.</p>
-                    <a href="{{ route('tracking.index') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition hover:underline">More</a>
+                <!-- Laporan di Proses -->
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <p class="text-gray-600 text-sm">Laporan di Proses</p>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">123</h2>
                 </div>
 
-                <!-- Layanan Pendampingan Card -->
-                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Layanan Pendampingan</h3>
-                    <p class="text-gray-600 mb-6">Menerapkan metode pembelajaran adaptif yang dapat membantu Code
-                        Friends untuk memaksimalkan pemahaman terhadap penerapan dari bahasa pemrograman.</p>
-                    <a href="{{ route('pendampingan.index') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition hover:underline">More</a>
+                <!-- Laporan di Tutup -->
+                <div class="bg-white p-6 rounded-lg shadow text-center">
+                    <p class="text-gray-600 text-sm">Laporan di Tutup</p>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2">28,201</h2>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- Layanan Konseling Card -->
-                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Layanan Konseling</h3>
-                    <p class="text-gray-600 mb-6">Menerapkan metode pembelajaran adaptif yang dapat membantu Code
-                        Friends untuk memaksimalkan pemahaman terhadap penerapan dari bahasa pemrograman.</p>
-                    <a href="{{ route('konseling.index') }}"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition hover:underline">More</a>
-                </div>
+            <!-- Filter Placeholder -->
+            <div class="mb-4 bg-white p-4 rounded-lg shadow flex flex-wrap gap-4 items-center">
+                <span class="font-semibold text-gray-700">Filter:</span>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="form-checkbox text-blue-500" />
+                    <span>Semua</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="form-checkbox text-blue-500" />
+                    <span>Status Laporan</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="checkbox" class="form-checkbox text-blue-500" />
+                    <span>Jenis Kasus</span>
+                </label>
+            </div>
 
-                <!-- Edukasi Card -->
-                <div class="bg-gray-50 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Edukasi</h3>
-                    <p class="text-gray-600 mb-6">Menerapkan metode pembelajaran adaptif yang dapat membantu Code
-                        Friends untuk memaksimalkan pemahaman terhadap penerapan dari bahasa pemrograman.</p>
-                    <a href="#"
-                        class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-600 transition hover:underline">More</a>
-                </div>
+            <!-- Chart Container -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div id="laporanChart" class="w-full h-96"></div>
             </div>
         </div>
+
+        <!-- Highcharts Script -->
+        <script>
+            Highcharts.chart('laporanChart', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Statistik Laporan Bulanan'
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Jumlah Laporan'
+                    }
+                },
+                tooltip: {
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                        name: 'Laporan Masuk',
+                        data: [32, 34, 20, 39, 35, 10, 33, 28, 30, 33, 34, 36],
+                        color: '#3B82F6'
+                    },
+                    {
+                        name: 'Laporan di Proses',
+                        data: [18, 22, 15, 28, 30, 8, 27, 24, 25, 29, 30, 33],
+                        color: '#93C5FD'
+                    }
+                ]
+            });
+        </script>
     </section>
-    @include('template.footer2')
 @endsection
