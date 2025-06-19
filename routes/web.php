@@ -69,7 +69,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Pendampingan Routes - index dan show (UMUM)
     Route::prefix('pendampingan')->name('pendampingan.')->group(function () {
         Route::get('/', [PendampinganController::class, 'index'])->name('index');
+        Route::get('/create', [PendampinganController::class, 'create'])->name('create');
         Route::get('/{id}', [PendampinganController::class, 'show'])->name('show');
+        Route::get('/konfirmasi/{id}', [PendampinganController::class, 'showkonfirmasi'])->name('showkonfirmasi');
         Route::put('/{id}/konfirmasi', [PendampinganController::class, 'updateKonfirmasi'])->name('update-konfirmasi');
     });
 

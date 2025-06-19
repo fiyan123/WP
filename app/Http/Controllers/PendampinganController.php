@@ -30,7 +30,7 @@ class PendampinganController extends Controller
             })->with(['pengaduan', 'korban'])->get();
         }
 
-        return view('pendampingan.index', compact('pendampingans'));
+        return view('pendampingan_staff_dinas.index', compact('pendampingans'));
     }
 
     /**
@@ -53,7 +53,7 @@ class PendampinganController extends Controller
         // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
         $instrukturs = instruktur::all();
 
-        return view('pendampingan.create', compact('pengaduans', 'layanans', 'instrukturs'));
+        return view('pendampingan_staff_dinas.create', compact('pengaduans', 'layanans', 'instrukturs'));
     }
 
     /**
@@ -130,12 +130,17 @@ class PendampinganController extends Controller
      */
     public function show($id)
     {
-        $pendampingan = Pendampingan::with(['pengaduan', 'korban'])->findOrFail($id);
-        
-        // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
-        $instrukturs = instruktur::all();
-        
-        return view('pendampingan.show', compact('pendampingan', 'instrukturs'));
+    //     $pendampingan = Pendampingan::with(['pengaduan', 'korban'])->findOrFail($id);
+
+    //     // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
+    //     $instrukturs = instruktur::all();
+
+        // return view('pendampingan_staff_dinas.show', compact('pendampingan', 'instrukturs'));
+        return view('pendampingan_staff_dinas.show');
+    }
+    public function showkonfirmasi($id)
+    {
+        return view('pendampingan_staff_dinas.konfirmasi');
     }
 
     /**
@@ -276,16 +281,16 @@ class PendampinganController extends Controller
 
             // Update fields if provided
             $updateData = ['konfirmasi' => $request->konfirmasi];
-            
+
             if ($request->filled('nama_pendamping')) {
                 $updateData['nama_pendamping'] = $request->nama_pendamping;
             }
-            
+
             if ($request->filled('tanggal_pendampingan') && $request->filled('waktu_pendampingan')) {
                 $tanggalWaktu = $request->tanggal_pendampingan . ' ' . $request->waktu_pendampingan;
                 $updateData['tanggal_pendampingan'] = $tanggalWaktu;
             }
-            
+
             if ($request->filled('tempat_pendampingan')) {
                 $updateData['tempat_pendampingan'] = $request->tempat_pendampingan;
             }
@@ -296,7 +301,7 @@ class PendampinganController extends Controller
             if ($pendampingan->pengaduan->user_id !== $user->id) {
                 abort(403, 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
             }
-            
+
             $request->validate([
                 'konfirmasi' => ['required', Rule::in([
                     Pendampingan::STATUS_TERKONFIRMASI,
@@ -320,7 +325,7 @@ class PendampinganController extends Controller
     public function requestForm()
     {
         $user = Auth::user();
-        
+
         if ($user->role === 'staff') {
             return redirect()->route('pendampingan.index')->with('error', 'Staff tidak dapat mengajukan pendampingan.');
         }
@@ -344,7 +349,7 @@ class PendampinganController extends Controller
     public function requestAccompaniment(Request $request)
     {
         $user = Auth::user();
-        
+
         if ($user->role === 'staff') {
             return redirect()->route('pendampingan.index')->with('error', 'Staff tidak dapat mengajukan pendampingan.');
         }
