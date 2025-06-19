@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 class PengaduanController extends Controller
 {
     public function index(){
-        return view('pengaduan.index');
+        // dd();
+        return view('pengaduan_staf_dinas.index');
     }
     // Menampilkan form pengaduan dan memilih kota
     public function create()
@@ -44,16 +45,30 @@ class PengaduanController extends Controller
     // Menampilkan detail pengaduan
     public function show($id)
     {
-        $user = Auth::user();
-        $pengaduan = Pengaduan::with(['pelapor', 'korban', 'pelaku', 'historiTracking.changedByUser', 'user.alamat'])
-            ->findOrFail($id);
+        // $user = Auth::user();
+        // $pengaduan = Pengaduan::with(['pelapor', 'korban', 'pelaku', 'historiTracking.changedByUser', 'user.alamat'])
+        //     ->findOrFail($id);
 
-        // Pastikan user hanya bisa melihat pengaduan miliknya (jika role pelapor)
-        if ($user->role === 'pelapor' && $pengaduan->user_id !== $user->id) {
-            abort(403, 'Unauthorized action.');
-        }
+        // // Pastikan user hanya bisa melihat pengaduan miliknya (jika role pelapor)
+        // if ($user->role === 'pelapor' && $pengaduan->user_id !== $user->id) {
+        //     abort(403, 'Unauthorized action.');
+        // }
 
-        return view('pengaduan.show', compact('pengaduan'));
+        // return view('pengaduan.show', compact('pengaduan'));
+
+            // Data dummy sementara
+            $data = [
+                'id' => $id,
+                'nama' => 'Aisyah Nanda',
+                'tanggal' => '15 - 02 - 2025',
+                'kecamatan' => 'Bojongsoang',
+                'jenis' => 'Kekerasan terhadap perempuan',
+                'bentuk' => 'Fisik',
+                'status' => 'Diproses',
+            ];
+
+            return view('pengaduan_staf_dinas.show', compact('data'));
+
     }
 
     // Menampilkan riwayat pengaduan user
