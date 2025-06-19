@@ -114,9 +114,9 @@
                 <li class="text-gray-500">Pengaduan Kasus</li>
             </ol>
         </nav>
-        <button class="bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
+        {{-- <button class="bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
             + Buat Pengaduan
-        </button>
+        </button> --}}
     </div>
 
     <div class="overflow-x-auto bg-white rounded-lg shadow px-2 sm:px-4">
