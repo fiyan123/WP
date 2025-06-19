@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Buat Jadwal Konseling') }}
@@ -7,10 +7,10 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if($errors->any())
+            @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
                     <ul>
-                        @foreach($errors->all() as $error)
+                        @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
@@ -27,7 +27,7 @@
                             <x-input-label for="pengaduan_id" :value="__('ID Pengaduan')" />
                             <select id="pengaduan_id" name="pengaduan_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">Pilih ID Pengaduan</option>
-                                @foreach($pengaduans as $pengaduan)
+                                @foreach ($pengaduans as $pengaduan)
                                     <option value="{{ $pengaduan->id }}" {{ old('pengaduan_id') == $pengaduan->id ? 'selected' : '' }}>
                                         {{ $pengaduan->id }} - {{ $pengaduan->nama_pelapor }}
                                     </option>
@@ -53,7 +53,7 @@
                             <x-input-label for="jenis_layanan" :value="__('Jenis Layanan Konseling')" />
                             <select id="jenis_layanan" name="jenis_layanan" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">Pilih Jenis Layanan</option>
-                                @foreach($layanans as $layanan)
+                                @foreach ($layanans as $layanan)
                                     <option value="{{ $layanan->nama_layanan }}" {{ old('jenis_layanan') == $layanan->nama_layanan ? 'selected' : '' }}>
                                         {{ $layanan->nama_layanan }}
                                     </option>
@@ -274,4 +274,77 @@
         });
     </script>
     @endpush
-</x-app-layout> 
+</x-app-layout>  --}}
+
+@extends('template.main')
+
+@section('content_template')
+    <section class="bg-white p-6 rounded-md shadow">
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-gray-600 font-semibold mb-4" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="{{ url('/') }}" class="text-blue-600 hover:underline">Homepage</a></li>
+                <li>/</li>
+                <li><a href="#" class="text-blue-600 hover:underline">Layanan</a></li>
+                <li>/</li>
+                <li><a href="#" class="text-blue-600 hover:underline">Konseling</a></li>
+                <li>/</li>
+                <li class="text-gray-500">Buat Jadwal</li>
+            </ol>
+        </nav>
+
+        <h2 class="font-bold text-lg mb-4 mt-10">Layanan Konseling Korban</h2>
+
+        <div class="border border-gray-300 p-4 rounded-md space-y-2 bg-white">
+
+            <form action="#" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @csrf
+
+                <!-- ID Pengaduan -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">ID Pengaduan</label>
+                    <select name="pengaduan_id" class="w-full border rounded p-2" required>
+                        <option value="">Pilih ID Pengaduan</option>
+                    </select>
+                </div>
+
+                <!-- Nama Korban -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nama Korban</label>
+                    <input type="text" class="w-full border rounded p-2" name="nama_korban"
+                        value="{{ old('nama_korban') }}">
+                </div>
+
+                <!-- Tanggal Konseling -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Tanggal Konseling *</label>
+                    <input type="date" name="tanggal" class="w-full border rounded p-2" required>
+                </div>
+
+                <!-- Waktu Konseling -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">Waktu Konseling *</label>
+                    <input type="time" name="waktu" class="w-full border rounded p-2" required>
+                </div>
+
+                <!-- Jenis Pelayanan -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Jenis Pelayanan *</label>
+                    <select name="jenis_pelayanan" class="w-full border rounded p-2" required>
+                        <option value="">Pilih Jenis Pelayanan</option>
+                        <option value="Asesmen Psikologis">Asesmen Psikologis</option>
+                        <option value="Intervensi Psikologis">Intervensi Psikologis</option>
+                    </select>
+                </div>
+
+                <!-- Tombol -->
+                <div class="md:col-span-2 flex justify-center gap-2 mt-4">
+                    <a href="{{ route('konseling.index') }}"
+                        class="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-400">Batal</a>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-600">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </section>
+@endsection

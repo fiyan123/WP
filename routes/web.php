@@ -20,6 +20,7 @@ use App\Http\Controllers\CustomDashboardController;
 use App\Http\Controllers\DataDashboardController;
 use App\Http\Controllers\AnalyticsDashboardController;
 use App\Http\Controllers\KelolaDataController;
+use App\Http\Controllers\KonselingStaffController;
 
 // Public Routes
 Route::get('/', function () {
@@ -66,6 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Konseling routes (index dan show, dapat diakses umum)
     Route::prefix('konseling')->name('konseling.')->group(function () {
         Route::get('/', [KonselingController::class, 'index'])->name('index');
+
+        Route::get('create', [KonselingController::class, 'create'])->name('create');
+
         Route::get('/{id}', [KonselingController::class, 'show'])->name('show');
         Route::put('/{id}/konfirmasi', [KonselingController::class, 'updateKonfirmasi'])->name('update-konfirmasi');
     });
