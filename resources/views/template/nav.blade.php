@@ -75,12 +75,13 @@
 
                 </div>
 
-                @guest
-                    <a href="#" class="hover:text-blue-600">Edukasi</a>
-                    <a href="#" class="hover:text-blue-600">About</a>
-                @endguest
+                <a href="{{ route('edukasi') }}" class="hover:text-blue-600">Edukasi</a>
+                <a href="{{ route('about') }}" class="hover:text-blue-600">About</a>
+
                 @auth
-                    <a href="{{ route('kelolaData') }}" class="hover:text-blue-600">Kelola Data</a>
+                    @if (Auth::user()->role === 'staff')
+                        <a href="{{ route('kelolaData') }}" class="hover:text-blue-600">Kelola Data</a>
+                    @endif
                 @endauth
             </div>
             <div
@@ -101,7 +102,7 @@
                     <!-- Modal Logout -->
                     @include('components.logout-modal')
 
-                    <a href="#"
+                    <a href="{{ route('profile.edit') }}"
                         class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">Profile</a>
 
                 @endauth
