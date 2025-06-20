@@ -26,6 +26,12 @@ use App\Http\Controllers\KonselingStaffController;
 Route::get('/', function () {
     return view('landing');
 });
+
+// Route about
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
 // Route::get('/Pengaduan', function () {
 //     return view('pengaduan.pengaduan');
 // });

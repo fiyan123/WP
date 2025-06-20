@@ -48,7 +48,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +55,6 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="min-h-screen flex items-center justify-center bg-cover bg-center"
     style="background-image: url('{{ asset('assets/image.png') }}');">
 
@@ -80,7 +78,7 @@
                 <label class="block text-sm font-medium text-gray-700">Email</label>
                 <input name="email" type="email" placeholder="Email Address" value="{{ old('email') }}" required
                     autofocus
-                    class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
                 @error('email')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -90,7 +88,7 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Password</label>
                 <input name="password" type="password" placeholder="Password" required
-                    class="w-full mt-1 px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+                    class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
                 @error('password')
                     <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                 @enderror
@@ -119,5 +117,4 @@
         </div>
     </div>
 </body>
-
 </html>
