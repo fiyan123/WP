@@ -68,7 +68,13 @@ public function index()
         // Ambil semua instruktur untuk filtering berdasarkan jenis layanan
         $instrukturs = instruktur::all();
 
-        return view('konseling.create', compact('pengaduans', 'layanans', 'instrukturs'));
+        // return view('konseling.create', compact('pengaduans', 'layanans', 'instrukturs'));
+        
+        return view('konseling_staff_dinas.create', [
+            'pengaduans' => $pengaduans,
+            'layanans' => $layanans,
+            'instrukturs' => $instrukturs,
+        ]);
     }
 
     public function store(Request $request)
@@ -137,7 +143,7 @@ public function index()
             ->with('success', 'Jadwal konseling berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show()
     {
         // $konseling = Konseling::with(['pengaduan', 'korban'])->findOrFail($id);
 

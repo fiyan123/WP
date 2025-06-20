@@ -79,7 +79,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('konseling')->name('konseling.')->group(function () {
         Route::get('/', [KonselingController::class, 'index'])->name('index');
         Route::get('/create', [KonselingController::class, 'create'])->name('create');
-        Route::get('/{id}', [KonselingController::class, 'show'])->name('show');
+
+        // Route::get('/{id}', [KonselingController::class, 'show'])->name('show');
+        Route::get('/show', [KonselingController::class, 'show'])->name('show');
+
         Route::get('/konfirmasi/{id}', [KonselingController::class, 'showkonfirmasi'])->name('showkonfirmasi');
         Route::put('/{id}/konfirmasi', [KonselingController::class, 'updateKonfirmasi'])->name('update-konfirmasi');
     });
@@ -88,7 +91,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('pendampingan')->name('pendampingan.')->group(function () {
         Route::get('/', [PendampinganController::class, 'index'])->name('index');
         Route::get('/create', [PendampinganController::class, 'create'])->name('create');
-        Route::get('/{id}', [PendampinganController::class, 'show'])->name('show');
+
+        // Route::get('/{id}', [PendampinganController::class, 'show'])->name('show');
+        Route::get('/show', [PendampinganController::class, 'show'])->name('show');
+
         Route::get('/konfirmasi/{id}', [PendampinganController::class, 'showkonfirmasi'])->name('showkonfirmasi');
         Route::put('/{id}/konfirmasi', [PendampinganController::class, 'updateKonfirmasi'])->name('update-konfirmasi');
     });

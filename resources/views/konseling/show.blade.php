@@ -1,10 +1,10 @@
-<x-app-layout>
+{{-- <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Detail Pendampingan') }}
             </h2>
-            @if(auth()->user()->role !== 'staff' && $pendampingan->isMenungguKonfirmasiUser())
+            @if (auth()->user()->role !== 'staff' && $pendampingan->isMenungguKonfirmasiUser())
             <div class="flex space-x-2">
                 <form action="{{ route('pendampingan.update-konfirmasi', $pendampingan->id) }}" method="POST" class="inline">
                     @csrf
@@ -29,7 +29,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(session('success'))
+            @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
                 </div>
@@ -47,7 +47,7 @@
                         <div>
                             <p class="text-sm text-gray-600">Status</p>
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                @if($pendampingan->isTerkonfirmasi()) bg-green-100 text-green-800
+                                @if ($pendampingan->isTerkonfirmasi()) bg-green-100 text-green-800
                                 @elseif($pendampingan->isDibatalkan()) bg-red-100 text-red-800
                                 @elseif($pendampingan->isMenungguKonfirmasiUser()) bg-blue-100 text-blue-800
                                 @else bg-yellow-100 text-yellow-800
@@ -62,7 +62,7 @@
                         <div>
                             <p class="text-sm text-gray-600">Nama Pendamping</p>
                             <p class="font-medium">
-                                @if($pendampingan->nama_pendamping === 'Belum ditentukan')
+                                @if ($pendampingan->nama_pendamping === 'Belum ditentukan')
                                     <span class="text-gray-500 italic">Belum ditentukan</span>
                                 @else
                                     {{ $pendampingan->nama_pendamping }}
@@ -80,7 +80,7 @@
                         <div>
                             <p class="text-sm text-gray-600">Tempat Pendampingan</p>
                             <p class="font-medium">
-                                @if($pendampingan->tempat_pendampingan === 'Belum ditentukan')
+                                @if ($pendampingan->tempat_pendampingan === 'Belum ditentukan')
                                     <span class="text-gray-500 italic">Belum ditentukan</span>
                                 @else
                                     {{ $pendampingan->tempat_pendampingan }}
@@ -107,7 +107,7 @@
                         <div>
                             <p class="text-sm text-gray-600">Status Pengaduan</p>
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                @if($pendampingan->pengaduan->status === 'selesai') bg-green-100 text-green-800
+                                @if ($pendampingan->pengaduan->status === 'selesai') bg-green-100 text-green-800
                                 @elseif($pendampingan->pengaduan->status === 'ditolak') bg-red-100 text-red-800
                                 @else bg-yellow-100 text-yellow-800
                                 @endif">
@@ -122,7 +122,7 @@
                 </div>
             </div>
 
-            @if(auth()->user()->role === 'staff' && $pendampingan->isButuhKonfirmasiStaff())
+            @if (auth()->user()->role === 'staff' && $pendampingan->isButuhKonfirmasiStaff())
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">Aksi Staff</h3>
@@ -233,7 +233,7 @@
                 <x-secondary-button onclick="window.history.back()" class="mr-3">
                     {{ __('Kembali') }}
                 </x-secondary-button>
-                @if(auth()->user()->role === 'staff')
+                @if (auth()->user()->role === 'staff')
                     <a href="{{ route('staff.pendampingan.edit', $pendampingan->id) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 mr-3">
                         {{ __('Edit') }}
                     </a>
@@ -268,4 +268,62 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-</x-app-layout> 
+</x-app-layout>  --}}
+@extends('template.main')
+@section('content_template')
+    <section class="bg-white py-8 px-4 sm:px-8 lg:px-12 rounded-lg shadow-md mt-6">
+        <!-- Breadcrumb dan Tombol -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+            <!-- Breadcrumb -->
+            <nav class="text-sm text-gray-600 font-medium" aria-label="Breadcrumb">
+                <ol class="flex flex-wrap items-center space-x-2">
+                    <li>
+                        <a href="{{ url('/') }}" class="hover:underline text-gray-700">Homepage</a>
+                    </li>
+                    <li class="text-gray-400 select-none"> &gt; </li>
+                    <li>
+                        <a href="#" class="hover:underline text-gray-700">Layanan</a>
+                    </li>
+                    <li class="text-gray-400 select-none"> &gt; </li>
+                    <li class="text-gray-800 font-semibold">Konseling</li>
+                </ol>
+            </nav>
+            <!-- Tombol Ajukan Jadwal -->
+            <button
+                class="bg-gray-400 hover:bg-gray-500 text-white text-xs font-medium py-2 px-5 rounded flex items-center gap-2 transition">
+                <span class="text-lg font-bold">+</span> Ajukan Jadwal
+            </button>
+        </div>
+
+        <div class="bg-white rounded shadow p-6">
+            <h3 class="font-bold text-gray-800 text-base mb-6">Layanan Konseling Korban</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                    <div class="block text-sm text-gray-600 font-medium">Tanggal Konseling</div>
+                    <div class="block text-gray-800 mt-1">Intervensi Psikologi</div>
+                </div>
+                <div>
+                    <div class="block text-sm text-gray-600 font-medium">Catatan</div>
+                    <div class="block text-gray-800 mt-1">-</div>
+                </div>
+                <div>
+                    <div class="block text-sm text-gray-600 font-medium">Tanggal Konseling</div>
+                    <div class="block text-gray-800 mt-1">20 - 02 - 2025</div>
+                </div>
+                <div>
+                    <div class="block text-sm text-gray-600 font-medium">Waktu Konseling</div>
+                    <div class="block text-gray-800 mt-1">10 : 00</div>
+                </div>
+            </div>
+            <hr class="mb-8">
+            <div class="flex justify-center gap-4 mt-8">
+                <button type="button"
+                    class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition text-sm font-medium">Konfirmasi
+                    Kehadiran</button>
+                <button type="button"
+                    class="bg-blue-200 text-white px-6 py-2 rounded hover:bg-blue-300 transition text-sm font-medium">Berhalangan
+                    Hadir</button>
+            </div>
+        </div>
+    </section>
+@endsection

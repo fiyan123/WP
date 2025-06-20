@@ -40,127 +40,128 @@
 
         <!-- Konten Kosong -->
         @if (true)
-    <section class="mt-10 px-4 sm:px-6 lg:px-8" id="index-konseling-kosong">
-  <h3 class="font-bold text-gray-800 text-lg mb-6">Layanan konseling Korban</h3>
+            <section class="mt-10 px-4 sm:px-6 lg:px-8" id="index-konseling-kosong">
+                <h3 class="font-bold text-gray-800 text-lg mb-6">Layanan konseling Korban</h3>
 
-  <!-- Data 1: Konfirmasi -->
-  <div class="bg-white relative p-4 border-t border-gray-300">
-    <!-- Tombol container: absolute di md ke atas, block di mobile -->
-    <div class="absolute md:top-4 md:right-4 md:flex md:gap-2 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center gap-2">
-      <button
-        class="bg-gray-600 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-gray-700"
-        onclick="kembaliKeKontenPenjadwalanMasuk();">Penjadwalan Masuk</button>
-      <button
-        class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-blue-600">Konfirmasi</button>
-    </div>
+                <!-- Data 1: Konfirmasi -->
+                <div class="bg-white relative p-4 border-t border-gray-300">
+                    <!-- Tombol container: absolute di md ke atas, block di mobile -->
+                    <div
+                        class="absolute md:top-4 md:right-4 md:flex md:gap-2 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center gap-2">
+                        <button class="bg-gray-600 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-gray-700"
+                            onclick="kembaliKeKontenPenjadwalanMasuk();">Penjadwalan Masuk</button>
+                        <button
+                            class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-blue-600">Konfirmasi</button>
+                    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
-        <p class="text-gray-700">konseling Layanan Kesehatan</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
-        <p class="text-gray-700">-</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
-        <p class="text-gray-700">15 - 02 - 2025</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
-        <p class="text-gray-700">09 : 00</p>
-      </div>
-    </div>
-  </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan</label>
+                            <p class="text-gray-700">konseling Layanan Kesehatan</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                            <p class="text-gray-700">-</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+                            <p class="text-gray-700">15 - 02 - 2025</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+                            <p class="text-gray-700">09 : 00</p>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Data 2: Diproses -->
-  <div class="bg-white relative p-4 border-t border-gray-300">
-    <!-- Badge container: absolute di md ke atas, block di mobile -->
-    <div
-      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
-      <span
-        class="bg-yellow-400 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Diproses</span>
-    </div>
+                <!-- Data 2: Diproses -->
+                <div class="bg-white relative p-4 border-t border-gray-300">
+                    <!-- Badge container: absolute di md ke atas, block di mobile -->
+                    <div
+                        class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+                        <span
+                            class="bg-yellow-400 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan
+                            Diproses</span>
+                    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
-        <p class="text-gray-700">konseling Layanan Kesehatan</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
-        <p class="text-gray-700">-</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
-        <p class="text-gray-700">15 - 02 - 2025</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
-        <p class="text-gray-700">09 : 00</p>
-      </div>
-    </div>
-  </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan</label>
+                            <p class="text-gray-700">konseling Layanan Kesehatan</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                            <p class="text-gray-700">-</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+                            <p class="text-gray-700">15 - 02 - 2025</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+                            <p class="text-gray-700">09 : 00</p>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Data 3: Berhasil -->
-  <div class="bg-white relative p-4 border-t border-gray-300">
-    <div
-      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
-      <span
-        class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Berhasil</span>
-    </div>
+                <!-- Data 3: Berhasil -->
+                <div class="bg-white relative p-4 border-t border-gray-300">
+                    <div
+                        class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+                        <span
+                            class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan
+                            Berhasil</span>
+                    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
-        <p class="text-gray-700">konseling Psikologis</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
-        <p class="text-gray-700">Dilakukan secara daring.</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
-        <p class="text-gray-700">10 - 02 - 2025</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
-        <p class="text-gray-700">14 : 00</p>
-      </div>
-    </div>
-  </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan</label>
+                            <p class="text-gray-700">konseling Psikologis</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                            <p class="text-gray-700">Dilakukan secara daring.</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+                            <p class="text-gray-700">10 - 02 - 2025</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+                            <p class="text-gray-700">14 : 00</p>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Data 4: Gagal -->
-  <div class="bg-white relative p-4 border-t border-gray-300">
-    <div
-      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
-      <span
-        class="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Gagal</span>
-    </div>
+                <!-- Data 4: Gagal -->
+                <div class="bg-white relative p-4 border-t border-gray-300">
+                    <div
+                        class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+                        <span
+                            class="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan
+                            Gagal</span>
+                    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
-        <p class="text-gray-700">konseling Hukum</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
-        <p class="text-gray-700">Pelapor tidak hadir.</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
-        <p class="text-gray-700">12 - 02 - 2025</p>
-      </div>
-      <div>
-        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
-        <p class="text-gray-700">10 : 00</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan</label>
+                            <p class="text-gray-700">konseling Hukum</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                            <p class="text-gray-700">Pelapor tidak hadir.</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+                            <p class="text-gray-700">12 - 02 - 2025</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+                            <p class="text-gray-700">10 : 00</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         @else
             <div id="index-konseling-kosong" class="text-center py-16 text-gray-500 max-w-xl mx-auto">
                 <p class="text-2xl font-semibold mb-2">Tidak Ada Jadwal konseling</p>
@@ -214,21 +215,20 @@
         </section>
 
     </section>
+    
     <section id="form-layanan-konseling" class="hidden bg-white py-6 px-4 sm:px-6 lg:px-8">
         <main class="max-w-6xl mx-auto p-6 bg-white rounded-md">
-            <div class="inline-block bg-blue-400 text-white text-sm font-medium px-6 py-2 rounded-tl-lg rounded-tr-lg mb-6">
-                Layanan konseling Korban
-            </div>
+            <h3 class="font-bold text-gray-800 text-lg mb-6">Layanan Konseling Korban</h3>
 
             <form class="space-y-10">
                 <section>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Jenis konseling -->
                         <div>
-                            <label class="block font-semibold text-gray-800 mb-1">Jenis konseling *</label>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis Pelayanan *</label>
                             <select
                                 class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
-                                <option selected disabled hidden>Jenis konseling</option>
+                                <option selected disabled hidden>Jenis Pelayanan</option>
                                 <option value="hukum">konseling Hukum</option>
                                 <option value="psikologis">konseling Psikologis</option>
                                 <option value="medis">konseling Medis</option>

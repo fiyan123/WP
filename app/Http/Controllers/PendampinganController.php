@@ -140,7 +140,7 @@ class PendampinganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
     //     $pendampingan = Pendampingan::with(['pengaduan', 'korban'])->findOrFail($id);
 
@@ -148,6 +148,9 @@ class PendampinganController extends Controller
     //     $instrukturs = instruktur::all();
 
         // return view('pendampingan_staff_dinas.show', compact('pendampingan', 'instrukturs'));
+        if (Auth::user()->role !== 'staff') {
+            return view('pendampingan.show');
+        }
         return view('pendampingan_staff_dinas.show');
     }
     public function showkonfirmasi($id)
