@@ -75,7 +75,7 @@
 
                 </div>
 
-                <a href="#" class="hover:text-blue-600">Edukasi</a>
+                <a href="{{ route('edukasi') }}" class="hover:text-blue-600">Edukasi</a>
                 <a href="{{ route('about') }}" class="hover:text-blue-600">About</a>
 
                 @auth

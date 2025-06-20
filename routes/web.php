@@ -32,6 +32,11 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+// Route edukasi
+Route::get('/edukasi', function () {
+    return view('edukasi');
+})->name('edukasi');
+
 // Route::get('/Pengaduan', function () {
 //     return view('pengaduan.pengaduan');
 // });
