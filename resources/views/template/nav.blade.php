@@ -79,7 +79,7 @@
                 <a href="{{ route('about') }}" class="hover:text-blue-600">About</a>
 
                 @auth
-                    @if (Auth::user()->role === 'staf_dinas')
+                    @if (Auth::user()->role === 'staff')
                         <a href="{{ route('kelolaData') }}" class="hover:text-blue-600">Kelola Data</a>
                     @endif
                 @endauth
