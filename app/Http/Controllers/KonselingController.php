@@ -155,7 +155,7 @@ public function index()
     }
     public function showkonfirmasi($id)
     {
-        return view('konseling.konfirmasi');
+        return view('konseling_staff_dinas.konfirmasi');
     }
 
     public function edit($id)
