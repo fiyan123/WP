@@ -48,7 +48,7 @@
                         class="inline-block bg-blue-400 text-white text-sm font-medium px-6 py-2 rounded-tl-lg rounded-tr-lg mb-6">
                         Laporan Pengaduan 1
                     </div>
-
+                    {{-- 
                     <!-- Identitas Pelapor -->
                     <section class="mb-8">
                         <h3 class="font-bold text-gray-800 text-lg mb-4">Identitas Pelapor</h3>
@@ -73,7 +73,7 @@
                         </div>
                     </section>
 
-                    <hr class="border-t border-gray-300 my-4" />
+                    <hr class="border-t border-gray-300 my-4" /> --}}
 
                     <!-- Identitas Korban -->
                     <section class="mb-8">
@@ -81,7 +81,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block font-semibold text-gray-800 mb-1">Nama Lengkap *</label>
-                                <p class="px-4 py-2">Dina Lestari</p>
+                                <p class="px-4 py-2">Aisya Nanda</p>
                             </div>
                             <div>
                                 <label class="block font-semibold text-gray-800 mb-1">Jenis Kelamin *</label>
@@ -92,31 +92,51 @@
                                 <p class="px-4 py-2">Tidak</p>
                             </div>
                             <div>
-                                <label class="block font-semibold text-gray-800 mb-1">Usia saat kejadian *</label>
-                                <p class="px-4 py-2">25</p>
+                                <label class="block font-semibold text-gray-800 mb-1">Usia saat Kejadian *</label>
+                                <p class="px-4 py-2">20</p>
                             </div>
                             <div>
                                 <label class="block font-semibold text-gray-800 mb-1">Pendidikan *</label>
-                                <p class="px-4 py-2">S1</p>
+                                <p class="px-4 py-2">Perguruan Tinggi</p>
                             </div>
                             <div>
                                 <label class="block font-semibold text-gray-800 mb-1">Pekerjaan *</label>
-                                <p class="px-4 py-2">Pegawai Swasta</p>
+                                <p class="px-4 py-2">Tidak Bekerja</p>
                             </div>
                             <div>
                                 <label class="block font-semibold text-gray-800 mb-1">Status Perkawinan *</label>
                                 <p class="px-4 py-2">Belum Menikah</p>
                             </div>
                             <div>
-                                <label class="block font-semibold text-gray-800 mb-1">No Handphone *</label>
-                                <p class="px-4 py-2">089876543210</p>
+                                <label class="block font-semibold text-gray-800 mb-1">No Handphone</label>
+                                <p class="px-4 py-2">085861015105</p>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-800 mb-1">Tempat Kejadian *</label>
+                                <p class="px-4 py-2">Fasilitas Umum</p>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-800 mb-1">Kecamatan *</label>
+                                <p class="px-4 py-2">Dayeuhkolot</p>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-800 mb-1">Tanggal Kejadian *</label>
+                                <p class="px-4 py-2">12-02-2025</p>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-gray-800 mb-1">Apakah sudah pernah dilaporkan?
+                                    *</label>
+                                <p class="px-4 py-2">
+                                    Pelaku mendekati korban dengan dalih menanyakan jalan. Tapi pelaku malah melakukan
+                                    kontak fisik secara instens yang membuat korban mengalami trauma berat.
+                                </p>
                             </div>
                         </div>
                     </section>
 
                     <hr class="border-t border-gray-300 my-4" />
 
-                    <!-- Identitas Pelaku -->
+                    {{-- <!-- Identitas Pelaku -->
                     <section class="mb-8">
                         <h3 class="font-bold text-gray-800 text-lg mb-4">Identitas Pelaku</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -185,11 +205,11 @@
                             <p class="px-4 py-2">Kejadian terjadi saat korban sedang berada di rumah sendirian dan pelaku
                                 memaksa masuk untuk melakukan tindakan kekerasan seksual.</p>
                         </div>
-                    </section>
+                    </section> --}}
 
                     <div class="flex justify-center mt-6 gap-4">
                         <button type="button" class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
-                            lihat Status Pengaduan
+                            lihat Perkembangan Laporan
                         </button>
                     </div>
                 </main>
@@ -202,8 +222,6 @@
         @endif
 
     </section>
-
-
 
     <style>
         input[type="checkbox"].toggle-switch {
@@ -238,14 +256,15 @@
             transform: translateX(20px);
         }
     </style>
+
     <section id="form-pengaduan" class=" hidden bg-white py-6 px-4 sm:px-6 lg:px-8">
         <main class="max-w-6xl mx-auto p-6 bg-white rounded-md">
             <div class="inline-block bg-blue-400 text-white text-sm font-medium px-6 py-2 rounded-tl-lg rounded-tr-lg mb-6">
-                Laporan Pengaduan 2
+                Laporan Pengaduan 1
             </div>
 
             <form class="space-y-10">
-                <!-- Identitas Pelapor -->
+                {{-- <!-- Identitas Pelapor -->
                 <section>
                     <h3 class="font-bold text-gray-800 text-lg mb-4">Identitas Pelapor</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -272,25 +291,18 @@
                         </div>
                     </div>
                 </section>
-                <hr class="border-t border-gray-300 my-4" />
+                <hr class="border-t border-gray-300 my-4" /> --}}
 
                 <!-- Identitas Korban -->
                 <section>
-
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-gray-800 text-lg">Identitas Korban</h3>
-                        <label class="flex items-center space-x-2 text-sm font-semibold text-gray-700">
-                            <span>Identitas diambil dari data pelapor</span>
-                            <input type="checkbox" class="toggle-switch" />
-                        </label>
-                    </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Nama Lengkap -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Nama Lengkap *</label>
                             <input type="text" placeholder="Nama"
                                 class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
                         </div>
+                        <!-- Jenis Kelamin -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Jenis Kelamin *</label>
                             <select
@@ -300,6 +312,7 @@
                                 <option value="perempuan">Perempuan</option>
                             </select>
                         </div>
+                        <!-- Disabilitas -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Disabilitas *</label>
                             <select
@@ -309,20 +322,29 @@
                                 <option value="ya">Ya</option>
                             </select>
                         </div>
+                        <!-- Usia saat Kejadian -->
                         <div>
-                            <label class="block font-semibold text-gray-800 mb-1">Usia saat kejadian *</label>
+                            <label class="block font-semibold text-gray-800 mb-1">Usia saat Kejadian *</label>
                             <input type="text" placeholder="Usia Korban"
                                 class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
                         </div>
+                        <!-- Pendidikan -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Pendidikan *</label>
                             <select
                                 class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
                                 <option selected disabled hidden>Pendidikan</option>
+                                <option value="tidak_sekolah">Tidak Sekolah</option>
+                                <option value="sd">SD</option>
+                                <option value="smp">SMP</option>
                                 <option value="sma">SMA</option>
+                                <option value="d3">D3</option>
                                 <option value="s1">S1</option>
+                                <option value="s2">S2</option>
+                                <option value="s3">S3</option>
                             </select>
                         </div>
+                        <!-- Pekerjaan -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Pekerjaan *</label>
                             <select
@@ -339,6 +361,7 @@
                                 <option value="lainnya">Lainnya</option>
                             </select>
                         </div>
+                        <!-- Status Perkawinan -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">Status Perkawinan *</label>
                             <select
@@ -350,17 +373,56 @@
                                 <option value="cerai_mati">Cerai Mati</option>
                             </select>
                         </div>
-
+                        <!-- No Handphone -->
                         <div>
                             <label class="block font-semibold text-gray-800 mb-1">No Handphone *</label>
                             <input type="text" placeholder="No Handphone"
                                 class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
                         </div>
+                        <!-- Tempat Kejadian -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tempat Kejadian *</label>
+                            <select
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                                <option selected disabled hidden>Tempat Kejadian</option>
+                                <option value="rumah">Rumah</option>
+                                <option value="kantor">Tempat Kerja</option>
+                                <option value="sekolah">Sekolah/Kampus</option>
+                                <option value="jalan">Ruang Publik</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <!-- Kecamatan -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Kecamatan *</label>
+                            <select
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                                <option selected disabled hidden>Kecamatan</option>
+                                <option value="dayeuhkolot">Dayeuhkolot</option>
+                                <option value="bojongsoang">Bojongsoang</option>
+                                <option value="cileunyi">Cileunyi</option>
+                                <option value="margahayu">Margahayu</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <!-- Tanggal Kejadian -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal Kejadian *</label>
+                            <input type="date"
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none"
+                                placeholder="DD - MM - YYYY" />
+                        </div>
+                        <!-- Kronologi Singkat -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Kronologi Singkat *</label>
+                            <textarea placeholder="Deskripsikan kronologi kejadian"
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none"></textarea>
+                        </div>
                     </div>
                 </section>
                 <hr class="border-t border-gray-300 my-4" />
 
-                <!-- Identitas Pelaku -->
+                {{-- <!-- Identitas Pelaku -->
                 <section>
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-bold text-gray-800 text-lg">Identitas Pelaku</h3>
@@ -534,7 +596,7 @@
                         <textarea rows="5" placeholder="Tuliskan kronologi singkat kejadian..."
                             class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none"></textarea>
                     </div>
-                </section>
+                </section> --}}
 
                 <div class="flex justify-center mt-6 gap-4">
                     <button type="button" onclick="kembaliKeKontenKosong()"
@@ -549,6 +611,7 @@
             </form>
         </main>
     </section>
+
     <script>
         function tampilkanFormPengaduan() {
             document.getElementById('index-pengaduan-kosong').classList.add('hidden');
