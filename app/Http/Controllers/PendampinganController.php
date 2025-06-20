@@ -17,21 +17,33 @@ class PendampinganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $user = Auth::user();
+   public function index()
+{
+    $user = Auth::user();
 
-        if ($user->role === 'staff') {
-            $pendampingans = Pendampingan::with(['pengaduan', 'korban'])->get();
-        } else {
-            // Untuk user biasa, tampilkan pendampingan terkait pengaduan mereka
-            $pendampingans = Pendampingan::whereHas('pengaduan', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })->with(['pengaduan', 'korban'])->get();
-        }
-
-        return view('pendampingan_staff_dinas.index', compact('pendampingans'));
+    // Jika tidak ada user yang login, redirect ke login
+    if (!$user) {
+        return redirect()->route('login');
     }
+
+    // Ambil data pendampingan berdasarkan peran pengguna
+    if ($user->role === 'staff') {
+        $pendampingans = Pendampingan::with(['pengaduan', 'korban'])->get();
+    } else {
+        // Untuk pelapor, ambil pendampingan berdasarkan pengaduan miliknya
+        $pendampingans = Pendampingan::whereHas('pengaduan', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->with(['pengaduan', 'korban'])->get();
+    }
+
+    // Tampilkan view berdasarkan role
+    return match ($user->role) {
+        'staff' => view('pendampingan_staff_dinas.index', compact('pendampingans')),
+        'pelapor' => view('pendampingan.index', compact('pendampingans')),
+        default => abort(403, 'Unauthorized access'),
+    };
+}
+
 
     /**
      * Show the form for creating a new resource.

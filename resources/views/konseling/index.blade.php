@@ -1,287 +1,320 @@
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Jadwal Konseling') }}
-            </h2>
-            @auth
-                <!-- Debug info -->
-               <!-- <div class="text-sm text-gray-600">
-                    Role: {{ auth()->user()->role }}
-                </div> -->
-                @if (auth()->user()->role === 'staff')
-                <a href="{{ route('staff.konseling.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Buat Jadwal Konseling
-                </a>
-                @else
-                <a href="{{ route('user.konseling.request') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    {{ __('Ajukan Konseling') }}
-                </a>
-                @endif
-            @endauth
-        </div>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if (!Auth::check())
-                <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <span class="block sm:inline">Silakan <a href="{{ route('login') }}" class="font-bold underline">login</a> untuk melihat jadwal konseling Anda.</span>
-                </div>
-            @endif
-
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    @if (session('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            <span class="block sm:inline">{{ session('success') }}</span>
-                        </div>
-                    @endif
-
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Pengaduan</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Korban</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Layanan</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Konselor</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jadwal</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tempat</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse($konselings as $konseling)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->pengaduan_id }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->nama_korban }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->jenis_layanan ?? 'Belum ditentukan' }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->nama_konselor }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->getJadwalKonselingShort() }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $konseling->tempat_konseling }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                                @if ($konseling->konfirmasi === 'setuju') bg-green-100 text-green-800
-                                                @elseif($konseling->konfirmasi === 'tolak') bg-red-100 text-red-800
-                                                @else bg-yellow-100 text-yellow-800
-                                                @endif">
-                                                {{ $konseling->getStatusLabel() }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <div class="flex space-x-2">
-                                                <a href="{{ route('konseling.show', $konseling->id) }}" class="text-blue-600 hover:text-blue-900">Detail</a>
-
-                                                @if (auth()->user()->role === 'staff')
-                                                    <a href="{{ route('staff.konseling.edit', $konseling->id) }}" class="text-yellow-600 hover:text-yellow-900">Edit</a>
-                                                    <form action="{{ route('staff.konseling.destroy', $konseling->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal konseling ini?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
-                                                    </form>
-                                                @else
-                                                    @if ($konseling->konfirmasi === 'menunggu' || $konseling->konfirmasi === 'menunggu_konfirmasi_user')
-                                                        <form action="{{ route('konseling.update-konfirmasi', $konseling->id) }}" method="POST" class="inline">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <input type="hidden" name="konfirmasi" value="setuju">
-                                                            <button type="submit" class="text-green-600 hover:text-green-900">Setuju</button>
-                                                        </form>
-                                                        <form action="{{ route('konseling.update-konfirmasi', $konseling->id) }}" method="POST" class="inline">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <input type="hidden" name="konfirmasi" value="tolak">
-                                                            <button type="submit" class="text-red-600 hover:text-red-900">Tolak</button>
-                                                        </form>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="8" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
-                                            Tidak ada jadwal konseling
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>  --}}
-
-
 @extends('template.main')
 @section('content_template')
+    <style>
+        #btnBuatkonseling:disabled {
+            background-color: #9ca3af;
+            /* abu-abu */
+            cursor: not-allowed;
+            /* hapus efek hover supaya gak berubah warna */
+        }
 
-<!-- DataTables CSS & JS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        #btnBuatkonseling:disabled:hover {
+            background-color: #9ca3af;
+        }
+    </style>
+    <section class="bg-white py-6 px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb dan Tombol dalam 1 baris -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10 space-y-3 sm:space-y-0">
+            <!-- Breadcrumb -->
+            <nav class="text-sm text-gray-600 font-semibold" aria-label="Breadcrumb">
+                <ol class="list-none flex flex-wrap items-center space-x-2">
+                    <li>
+                        <a href="{{ url('/') }}" class="hover:underline text-blue-600 font-semibold">Homepage</a>
+                    </li>
+                    <li class="text-gray-600 select-none font-semibold">/</li>
+                    <li>
+                        <a href="#" class="hover:underline text-blue-600 font-semibold">Layanan</a>
+                    </li>
+                    <li class="text-gray-600 select-none font-semibold">/</li>
+                    <li class="text-gray-500 font-semibold">Konseling </li>
+                </ol>
+            </nav>
 
-<style>
-    #tableKonseling tbody tr:nth-child(even) { background-color: #f0f8ff; }
-    #tableKonseling tbody tr:nth-child(odd) { background-color: #ffffff; }
 
-    .dataTables_wrapper .dataTables_paginate {
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 0.875rem;
-    }
+            <!-- Tombol -->
+            <button id="btnBuatkonseling" onclick="tampilkanFormKonseling()"
+                class="bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
+                + Ajukan Jadwal
+            </button>
+        </div>
 
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding: 6px 12px;
-        margin: 0 2px;
-        border-radius: 4px;
-        background-color: transparent;
-        border: none;
-        color: #2563eb !important;
-        font-weight: 500;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+        <!-- Konten Kosong -->
+        @if (true)
+    <section class="mt-10 px-4 sm:px-6 lg:px-8" id="index-konseling-kosong">
+  <h3 class="font-bold text-gray-800 text-lg mb-6">Layanan konseling Korban</h3>
 
-    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        background-color: #f0f8ff !important;
-        color: #2563eb !important;
-    }
-
-    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-        background-color: #bfdbfe !important;
-        color: #1e3a8a !important;
-        font-weight: bold;
-    }
-
-    div.dataTables_filter {
-        margin-bottom: 1.25rem;
-        display: flex;
-        justify-content: end;
-    }
-
-    div.dataTables_filter label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-weight: 500;
-        color: #374151;
-    }
-
-    div.dataTables_filter input {
-        border-radius: 9999px;
-        border: 1px solid #d1d5db;
-        padding: 0.5rem 1rem;
-        outline: none;
-    }
-</style>
-
-<script>
-    $(document).ready(function () {
-        $('#tableKonseling').DataTable({
-            responsive: true,
-            order: [],
-            columnDefs: [{ orderable: false, targets: [0, 6] }],
-            language: {
-                search: "Cari:",
-                lengthMenu: "Tampilkan _MENU_ entri",
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-                paginate: {
-                    first: "Pertama",
-                    last: "Terakhir",
-                    next: "Next",
-                    previous: "Previous"
-                },
-                zeroRecords: "Tidak ditemukan data yang cocok",
-                infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
-                infoFiltered: "(disaring dari total _MAX_ entri)"
-            }
-        });
-    });
-</script>
-
-<!-- Konten -->
-<section class="bg-white py-6 px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-3 sm:space-y-0">
-        <nav class="text-sm text-gray-600 font-semibold" aria-label="Breadcrumb">
-            <ol class="flex items-center space-x-2">
-                <li><a href="{{ url('/') }}" class="text-blue-600 hover:underline">Homepage</a></li>
-                <li class="text-gray-600">/</li>
-                <li><a href="#" class="text-blue-600 hover:underline">Layanan</a></li>
-                <li class="text-gray-600">/</li>
-                <li class="text-gray-500">Konseling</li>
-            </ol>
-        </nav>
-        <a href="{{ route('konseling.create') }}" class="bg-blue-500 text-white text-sm font-medium py-2 px-4 rounded hover:bg-blue-600 transition">
-            + Buat Jadwal
-        </a>
+  <!-- Data 1: Konfirmasi -->
+  <div class="bg-white relative p-4 border-t border-gray-300">
+    <!-- Tombol container: absolute di md ke atas, block di mobile -->
+    <div class="absolute md:top-4 md:right-4 md:flex md:gap-2 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center gap-2">
+      <button
+        class="bg-gray-600 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-gray-700"
+        onclick="kembaliKeKontenPenjadwalanMasuk();">Penjadwalan Masuk</button>
+      <button
+        class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded hover:bg-blue-600">Konfirmasi</button>
     </div>
 
-    <div class="overflow-x-auto bg-white rounded-lg shadow px-2 sm:px-4">
-        <table id="tableKonseling" class="table-auto w-full text-xs sm:text-sm divide-y divide-gray-200">
-            <thead class="bg-blue-600 text-white text-center">
-                <tr>
-                    <th class="p-3 whitespace-nowrap"><input type="checkbox"></th>
-                    <th class="p-3 whitespace-nowrap">ID Pengaduan</th>
-                    <th class="p-3 whitespace-nowrap">Nama Korban</th>
-                    <th class="p-3 whitespace-nowrap">Tanggal</th>
-                    <th class="p-3 whitespace-nowrap">Waktu</th>
-                    <th class="p-3 whitespace-nowrap">Jenis Pelayanan</th>
-                    <th class="p-3 whitespace-nowrap">Status</th>
-                </tr>
-            </thead>
-            <tbody class="text-center text-gray-800">
-                @php
-                    $rows = [
-                        ['id' => '10082874', 'nama' => 'Aisyah Nanda', 'tanggal' => '12-02-2025', 'waktu' => '10:00', 'jenis' => 'Kekerasan terhadap perempuan', 'status' => 'Menunggu Konfirmasi'],
-                        ['id' => '10082875', 'nama' => 'Nadia Rahma', 'tanggal' => '12-02-2025', 'waktu' => '10:00', 'jenis' => 'Kekerasan anak', 'status' => 'Terkonfirmasi'],
-                        ['id' => '10082876', 'nama' => 'Putri Amelia', 'tanggal' => '12-02-2025', 'waktu' => '10:00', 'jenis' => 'KDRT', 'status' => 'Ditolak'],
-                    ];
-                @endphp
-
-                @foreach ($rows as $r)
-                    @php
-                        $badge = match ($r['status']) {
-                            'Menunggu Konfirmasi' => 'bg-gray-600 text-white',
-                            'Terkonfirmasi' => 'bg-green-600 text-white',
-                            'Ditolak' => 'bg-red-600 text-white',
-                            default => 'bg-gray-400 text-white',
-                        };
-
-                        $link = $r['status'] === 'Menunggu Konfirmasi'
-                            ? url('konseling/konfirmasi/' . $r['id'])
-                            : url('konseling/' . $r['id']);
-                    @endphp
-                    <tr>
-                        <td class="p-3 whitespace-nowrap"><input type="checkbox"></td>
-                        <td class="p-3 whitespace-nowrap">{{ $r['id'] }}</td>
-                        <td class="p-3 whitespace-nowrap">{{ $r['nama'] }}</td>
-                        <td class="p-3 whitespace-nowrap">{{ $r['tanggal'] }}</td>
-                        <td class="p-3 whitespace-nowrap">{{ $r['waktu'] }}</td>
-                        <td class="p-3 whitespace-nowrap">{{ $r['jenis'] }}</td>
-                        <td class="p-3 whitespace-nowrap">
-                            <div class="flex items-center justify-center gap-2">
-                                <span class="w-36 text-center px-3 py-1 rounded text-xs font-semibold {{ $badge }}">
-                                    {{ $r['status'] }}
-                                </span>
-                                <a href="{{ $link }}" class="bg-blue-500 p-2 rounded hover:bg-blue-600" title="Lihat Detail">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"/>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
+        <p class="text-gray-700">konseling Layanan Kesehatan</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+        <p class="text-gray-700">-</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+        <p class="text-gray-700">15 - 02 - 2025</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+        <p class="text-gray-700">09 : 00</p>
+      </div>
     </div>
+  </div>
+
+  <!-- Data 2: Diproses -->
+  <div class="bg-white relative p-4 border-t border-gray-300">
+    <!-- Badge container: absolute di md ke atas, block di mobile -->
+    <div
+      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+      <span
+        class="bg-yellow-400 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Diproses</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
+        <p class="text-gray-700">konseling Layanan Kesehatan</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+        <p class="text-gray-700">-</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+        <p class="text-gray-700">15 - 02 - 2025</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+        <p class="text-gray-700">09 : 00</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data 3: Berhasil -->
+  <div class="bg-white relative p-4 border-t border-gray-300">
+    <div
+      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+      <span
+        class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Berhasil</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
+        <p class="text-gray-700">konseling Psikologis</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+        <p class="text-gray-700">Dilakukan secara daring.</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+        <p class="text-gray-700">10 - 02 - 2025</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+        <p class="text-gray-700">14 : 00</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data 4: Gagal -->
+  <div class="bg-white relative p-4 border-t border-gray-300">
+    <div
+      class="absolute md:top-4 md:right-4 right-0 top-0 w-full md:w-auto bg-white md:bg-transparent p-4 md:p-0 flex justify-center md:justify-end">
+      <span
+        class="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded inline-block whitespace-nowrap">Penjadwalan Gagal</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mt-12 md:mt-4">
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
+        <p class="text-gray-700">konseling Hukum</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+        <p class="text-gray-700">Pelapor tidak hadir.</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+        <p class="text-gray-700">12 - 02 - 2025</p>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+        <p class="text-gray-700">10 : 00</p>
+      </div>
+    </div>
+  </div>
 </section>
 
+
+        @else
+            <div id="index-konseling-kosong" class="text-center py-16 text-gray-500 max-w-xl mx-auto">
+                <p class="text-2xl font-semibold mb-2">Tidak Ada Jadwal konseling</p>
+                <p class="text-base sm:text-lg">Anda belum mendapatkan penjadwalan konseling.</p>
+            </div>
+        @endif
+        <section id="show-penjadwalan-masuk" class=" hidden bg-white py-6 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+                <h3 class="font-bold text-gray-800 text-lg mb-6">Layanan konseling Korban</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-10 mb-8">
+                    <!-- Jenis konseling -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-1">Jenis konseling</label>
+                        <p class="text-gray-700">konseling Layanan Kesehatan</p>
+                    </div>
+
+                    <!-- Catatan -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                        <p class="text-gray-700">-</p>
+                    </div>
+
+                    <!-- Tanggal konseling -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling</label>
+                        <p class="text-gray-700">15 - 02 - 2025</p>
+                    </div>
+
+                    <!-- Waktu konseling -->
+                    <div>
+                        <label class="block font-semibold text-gray-800 mb-1">Waktu konseling</label>
+                        <p class="text-gray-700">09 : 00</p>
+                    </div>
+                </div>
+
+                <hr class="mb-8">
+
+                <!-- Tombol Konfirmasi -->
+                <div class="flex justify-center gap-4">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition"
+                        onclick="kembaliKeKontenkonseling();">
+                        Konfirmasi Kehadiran
+                    </button>
+                    <button class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition"
+                        onclick="kembaliKeKontenkonseling();">
+                        Berhalangan Hadir
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </section>
+    <section id="form-layanan-konseling" class="hidden bg-white py-6 px-4 sm:px-6 lg:px-8">
+        <main class="max-w-6xl mx-auto p-6 bg-white rounded-md">
+            <div class="inline-block bg-blue-400 text-white text-sm font-medium px-6 py-2 rounded-tl-lg rounded-tr-lg mb-6">
+                Layanan konseling Korban
+            </div>
+
+            <form class="space-y-10">
+                <section>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Jenis konseling -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Jenis konseling *</label>
+                            <select
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                                <option selected disabled hidden>Jenis konseling</option>
+                                <option value="hukum">konseling Hukum</option>
+                                <option value="psikologis">konseling Psikologis</option>
+                                <option value="medis">konseling Medis</option>
+                            </select>
+                        </div>
+
+                        <!-- Catatan -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Catatan</label>
+                            <input type="text" placeholder="Catatan"
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
+                        </div>
+
+                        <!-- Tanggal konseling -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Tanggal konseling *</label>
+                            <input type="date"
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none" />
+                        </div>
+
+                        <!-- Waktu konseling -->
+                        <div>
+                            <label class="block font-semibold text-gray-800 mb-1">Waktu konseling *</label>
+                            <select
+                                class="w-full bg-blue-50 text-gray-800 px-4 py-2 border-b border-gray-300 focus:outline-none">
+                                <option selected disabled hidden>- - : - -</option>
+                                @for ($i = 8; $i <= 17; $i++)
+                                    @php
+                                        $formattedTime = sprintf('%02d:00', $i);
+                                    @endphp
+                                    <option value="{{ $formattedTime }}">{{ $formattedTime }}</option>
+                                @endfor
+                            </select>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Tombol Aksi -->
+                <div class="flex justify-center mt-6 gap-4">
+                    <button type="button" onclick="kembaliKeKontenkonselingKosong()"
+                        class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">Batal</button>
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition">Simpan</button>
+                </div>
+            </form>
+        </main>
+    </section>
+
+    <script>
+        function tampilkanFormKonseling() {
+            document.getElementById('index-konseling-kosong').classList.add('hidden');
+            document.getElementById('form-layanan-konseling').classList.remove('hidden');
+            const btn = document.getElementById('btnBuatkonseling');
+            btn.disabled = true; // disable tombol sebenarnya
+        }
+
+
+        function kembaliKeKontenkonselingKosong() {
+            document.getElementById('form-layanan-konseling').classList.add('hidden');
+            document.getElementById('index-konseling-kosong').classList.remove('hidden');
+            const btn = document.getElementById('btnBuatkonseling');
+            btn.disabled = false; // enable tombol kembali
+        }
+
+        function kembaliKeKontenPenjadwalanMasuk() {
+            document.getElementById('form-layanan-konseling').classList.add('hidden');
+            document.getElementById('index-konseling-kosong').classList.add('hidden');
+            document.getElementById('show-penjadwalan-masuk').classList.remove('hidden');
+            const btn = document.getElementById('btnBuatkonseling');
+            btn.disabled = true; // enable tombol kembali
+        }
+
+        function kembaliKeKontenPenjadwalanMasuk() {
+            document.getElementById('form-layanan-konseling').classList.add('hidden');
+            document.getElementById('index-konseling-kosong').classList.add('hidden');
+            document.getElementById('show-penjadwalan-masuk').classList.remove('hidden');
+            const btn = document.getElementById('btnBuatkonseling');
+            btn.disabled = true; // enable tombol kembali
+        }
+
+        function kembaliKeKontenkonseling() {
+            document.getElementById('index-konseling-kosong').classList.remove('hidden');
+            document.getElementById('show-penjadwalan-masuk').classList.add('hidden');
+            const btn = document.getElementById('btnBuatkonseling');
+            btn.disabled = false; // enable tombol kembali
+        }
+    </script>
 @endsection

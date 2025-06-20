@@ -23,5 +23,13 @@ class AdminSeeder extends Seeder
             'role' => 'staff',
             'email_verified_at' => now(),
         ]);
+        User::create([
+            'name' => 'pelapor',
+            'email' => 'pelapor@example.com',
+            'password' => Hash::make('pelapor123'),
+            'nik' => '12937213217',
+            'role' => 'pelapor',
+            'email_verified_at' => now(),
+        ]);
     }
-} 
+}
