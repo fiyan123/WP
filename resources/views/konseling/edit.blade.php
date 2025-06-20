@@ -1,25 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Jadwal Konseling') }}
+            {{ __('Edit Jadwal Pendampingan') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('staff.konseling.update', $konseling->id) }}" class="space-y-6">
+                    <form method="POST" action="{{ route('staff.pendampingan.update', $pendampingan->id) }}" class="space-y-6">
                         @csrf
                         @method('PUT')
 
@@ -29,7 +19,7 @@
                             <select id="pengaduan_id" name="pengaduan_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">Pilih ID Pengaduan</option>
                                 @foreach($pengaduans as $pengaduan)
-                                    <option value="{{ $pengaduan->id }}" {{ old('pengaduan_id', $konseling->pengaduan_id) == $pengaduan->id ? 'selected' : '' }}>
+                                    <option value="{{ $pengaduan->id }}" {{ old('pengaduan_id', $pendampingan->pengaduan_id) == $pengaduan->id ? 'selected' : '' }}>
                                         {{ $pengaduan->id }} - {{ $pengaduan->nama_pelapor }}
                                     </option>
                                 @endforeach
@@ -37,7 +27,7 @@
                             <x-input-error class="mt-2" :messages="$errors->get('pengaduan_id')" />
                         </div>
 
-                        <!-- Nama Korban -->
+                        <!-- Nama Korban (akan diisi via JS/Ajax berdasarkan pengaduan_id) -->
                         <div>
                             <x-input-label for="korban_id" :value="__('Nama Korban')" />
                             <select id="korban_id" name="korban_id" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" disabled>
@@ -51,11 +41,11 @@
 
                         <!-- Jenis Layanan -->
                         <div>
-                            <x-input-label for="jenis_layanan" :value="__('Jenis Layanan Konseling')" />
+                            <x-input-label for="jenis_layanan" :value="__('Jenis Layanan Pendampingan')" />
                             <select id="jenis_layanan" name="jenis_layanan" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">Pilih Jenis Layanan</option>
                                 @foreach($layanans as $layanan)
-                                    <option value="{{ $layanan->nama_layanan }}" {{ old('jenis_layanan', $konseling->jenis_layanan) == $layanan->nama_layanan ? 'selected' : '' }}>
+                                    <option value="{{ $layanan->nama_layanan }}" {{ old('jenis_layanan', $pendampingan->jenis_layanan) == $layanan->nama_layanan ? 'selected' : '' }}>
                                         {{ $layanan->nama_layanan }}
                                     </option>
                                 @endforeach
@@ -63,59 +53,36 @@
                             <x-input-error class="mt-2" :messages="$errors->get('jenis_layanan')" />
                         </div>
 
-                        <!-- Nama Konselor -->
+                        <!-- Nama Pendamping -->
                         <div>
-                            <x-input-label for="nama_konselor" :value="__('Nama Konselor')" />
-                            <select id="nama_konselor" name="nama_konselor" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" disabled>
-                                <option value="">Pilih Nama Konselor</option>
+                            <x-input-label for="nama_pendamping" :value="__('Nama Pendamping')" />
+                            <select id="nama_pendamping" name="nama_pendamping" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" disabled>
+                                <option value="">Pilih Jenis Layanan terlebih dahulu</option>
                             </select>
-                            <x-input-error class="mt-2" :messages="$errors->get('nama_konselor')" />
+                            <x-input-error class="mt-2" :messages="$errors->get('nama_pendamping')" />
                         </div>
 
-                        <!-- Jadwal Konseling -->
+                        <!-- Tanggal Pendampingan -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Tanggal Konseling -->
                             <div>
-                                <x-input-label for="tanggal_konseling" :value="__('Tanggal Konseling')" />
-                                @php
-                                    $tanggal_konseling_value = old('tanggal_konseling', $konseling->jadwal_konseling ? \Carbon\Carbon::parse($konseling->jadwal_konseling)->format('Y-m-d') : '');
-                                @endphp
-                                <x-text-input id="tanggal_konseling" 
-                                             class="block mt-1 w-full" 
-                                             type="date" 
-                                             name="tanggal_konseling" 
-                                             :value="$tanggal_konseling_value" 
-                                             required />
-                                <x-input-error class="mt-2" :messages="$errors->get('tanggal_konseling')" />
+                                <x-input-label for="tanggal_pendampingan" :value="__('Tanggal Pendampingan')" />
+                                <x-text-input id="tanggal_pendampingan" class="block mt-1 w-full" type="date" name="tanggal_pendampingan" :value="old('tanggal_pendampingan', \Carbon\Carbon::parse($pendampingan->tanggal_pendampingan)->format('Y-m-d'))" required autocomplete="tanggal_pendampingan" />
+                                <p class="mt-1 text-sm text-gray-500">Pilih tanggal (format: DD/MM/YYYY)</p>
+                                <x-input-error class="mt-2" :messages="$errors->get('tanggal_pendampingan')" />
                             </div>
-
-                            <!-- Waktu Konseling -->
                             <div>
-                                <x-input-label for="waktu_konseling" :value="__('Waktu Konseling')" />
-                                @php
-                                    $waktu_konseling_value = old('waktu_konseling', $konseling->jadwal_konseling ? \Carbon\Carbon::parse($konseling->jadwal_konseling)->format('H:i') : '');
-                                @endphp
-                                <x-text-input id="waktu_konseling" 
-                                             class="block mt-1 w-full" 
-                                             type="time" 
-                                             name="waktu_konseling" 
-                                             :value="$waktu_konseling_value" 
-                                             required />
+                                <x-input-label for="waktu_pendampingan" :value="__('Waktu Pendampingan')" />
+                                <x-text-input id="waktu_pendampingan" class="block mt-1 w-full" type="time" name="waktu_pendampingan" :value="old('waktu_pendampingan', \Carbon\Carbon::parse($pendampingan->tanggal_pendampingan)->format('H:i'))" required autocomplete="waktu_pendampingan" />
                                 <p class="mt-1 text-sm text-gray-500">Pilih waktu (format: HH:MM dalam 24 jam)</p>
-                                <x-input-error class="mt-2" :messages="$errors->get('waktu_konseling')" />
+                                <x-input-error class="mt-2" :messages="$errors->get('waktu_pendampingan')" />
                             </div>
                         </div>
 
-                        <!-- Tempat Konseling -->
+                        <!-- Tempat Pendampingan -->
                         <div>
-                            <x-input-label for="tempat_konseling" :value="__('Tempat Konseling')" />
-                            <x-text-input id="tempat_konseling" 
-                                         class="block mt-1 w-full" 
-                                         type="text" 
-                                         name="tempat_konseling" 
-                                         :value="old('tempat_konseling', $konseling->tempat_konseling)" 
-                                         required />
-                            <x-input-error class="mt-2" :messages="$errors->get('tempat_konseling')" />
+                            <x-input-label for="tempat_pendampingan" :value="__('Tempat Pendampingan')" />
+                            <x-text-input id="tempat_pendampingan" class="block mt-1 w-full" type="text" name="tempat_pendampingan" :value="old('tempat_pendampingan', $pendampingan->tempat_pendampingan)" required autocomplete="tempat_pendampingan" />
+                            <x-input-error class="mt-2" :messages="$errors->get('tempat_pendampingan')" />
                         </div>
 
                         <!-- Status Konfirmasi -->
@@ -123,50 +90,34 @@
                             <x-input-label for="konfirmasi" :value="__('Status Konfirmasi')" />
                             <select id="konfirmasi" name="konfirmasi" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                                 <option value="">Pilih Status (Opsional)</option>
-                                <option value="butuh_konfirmasi_staff" {{ old('konfirmasi', $konseling->konfirmasi) == 'butuh_konfirmasi_staff' ? 'selected' : '' }}>
+                                <option value="{{ \App\Models\Pendampingan::STATUS_BUTUH_KONFIRMASI_STAFF }}" {{ old('konfirmasi', $pendampingan->konfirmasi) == \App\Models\Pendampingan::STATUS_BUTUH_KONFIRMASI_STAFF ? 'selected' : '' }}>
                                     Butuh Konfirmasi Staff
                                 </option>
-                                <option value="menunggu_konfirmasi_user" {{ old('konfirmasi', $konseling->konfirmasi) == 'menunggu_konfirmasi_user' ? 'selected' : '' }}>
+                                <option value="{{ \App\Models\Pendampingan::STATUS_MENUNGGU_KONFIRMASI_USER }}" {{ old('konfirmasi', $pendampingan->konfirmasi) == \App\Models\Pendampingan::STATUS_MENUNGGU_KONFIRMASI_USER ? 'selected' : '' }}>
                                     Menunggu Konfirmasi User
                                 </option>
-                                <option value="setuju" {{ old('konfirmasi', $konseling->konfirmasi) == 'setuju' ? 'selected' : '' }}>
-                                    Setuju
+                                <option value="{{ \App\Models\Pendampingan::STATUS_TERKONFIRMASI }}" {{ old('konfirmasi', $pendampingan->konfirmasi) == \App\Models\Pendampingan::STATUS_TERKONFIRMASI ? 'selected' : '' }}>
+                                    Terkonfirmasi
                                 </option>
-                                <option value="tolak" {{ old('konfirmasi', $konseling->konfirmasi) == 'tolak' ? 'selected' : '' }}>
-                                    Tolak
+                                <option value="{{ \App\Models\Pendampingan::STATUS_DIBATALKAN }}" {{ old('konfirmasi', $pendampingan->konfirmasi) == \App\Models\Pendampingan::STATUS_DIBATALKAN ? 'selected' : '' }}>
+                                    Dibatalkan
                                 </option>
                             </select>
                             <p class="mt-1 text-sm text-gray-500">Biarkan kosong untuk mempertahankan status saat ini</p>
                             <x-input-error class="mt-2" :messages="$errors->get('konfirmasi')" />
                         </div>
 
+                        <!-- Catatan -->
+                        <!-- <div>
+                            <x-input-label for="catatan" :value="__('Catatan')" />
+                            <textarea id="catatan" name="catatan" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('catatan', $pendampingan->catatan) }}</textarea>
+                            <x-input-error class="mt-2" :messages="$errors->get('catatan')" />
+                        </div> -->
+
                         <div class="flex items-center gap-4">
-                            <x-primary-button>{{ __('Update') }}</x-primary-button>
+                            <x-primary-button>{{ __('Perbarui') }}</x-primary-button>
                         </div>
                     </form>
-
-                    @if(auth()->user()->role === 'staff' && $konseling->konfirmasi === 'butuh_konfirmasi_staff')
-                    <!-- Form Konfirmasi Terpisah -->
-                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-4">Aksi Konfirmasi</h3>
-                        <form action="{{ route('konseling.update-konfirmasi', $konseling->id) }}" method="POST" class="space-y-4">
-                            @csrf
-                            @method('PUT')
-                            
-                            <div class="flex space-x-2">
-                                <button type="submit" name="konfirmasi" value="setuju" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                    Setujui & Konfirmasi
-                                </button>
-                                <button type="submit" name="konfirmasi" value="menunggu_konfirmasi_user" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                                    Jadwal Ulang & Minta Konfirmasi User
-                                </button>
-                                <button type="submit" name="konfirmasi" value="tolak" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="return confirm('Apakah Anda yakin ingin menolak permintaan ini?');">
-                                    Tolak Permintaan
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    @endif
                 </div>
             </div>
         </div>
@@ -185,13 +136,12 @@
                  }) : []
              ];
          })) }}"
-         data-current-korban="{{ $konseling->korban_id }}"
+         data-current-korban-id="{{ $pendampingan->korban_id }}"
          data-layanan="{{ json_encode($layanans) }}"
          data-instruktur="{{ json_encode($instrukturs) }}"
-         data-current-konselor="{{ $konseling->nama_konselor }}"
-         data-current-layanan="{{ $konseling->jenis_layanan }}"
-         data-old-jenis-layanan="{{ old('jenis_layanan', $konseling->jenis_layanan) }}"
-         data-old-nama-konselor="{{ old('nama_konselor', $konseling->nama_konselor) }}"
+         data-current-nama-pendamping="{{ $pendampingan->nama_pendamping }}"
+         data-old-jenis-layanan="{{ old('jenis_layanan', $pendampingan->jenis_layanan) }}"
+         data-old-nama-pendamping="{{ old('nama_pendamping', $pendampingan->nama_pendamping) }}"
          style="display: none;">
     </div>
 
@@ -202,18 +152,18 @@
                 const korbanSelect = document.getElementById('korban_id');
                 const noKorbanMessage = document.getElementById('no-korban-message');
                 const dataContainer = document.getElementById('pengaduan-data');
+                const waktuInput = document.getElementById('waktu_pendampingan');
                 const jenisLayananSelect = document.getElementById('jenis_layanan');
-                const namaKonselorSelect = document.getElementById('nama_konselor');
+                const namaPendampingSelect = document.getElementById('nama_pendamping');
 
                 // Get data from hidden container
                 const pengaduanData = JSON.parse(dataContainer.getAttribute('data-pengaduan'));
+                const currentKorbanId = dataContainer.getAttribute('data-current-korban-id');
                 const layananData = JSON.parse(dataContainer.getAttribute('data-layanan'));
                 const instrukturData = JSON.parse(dataContainer.getAttribute('data-instruktur'));
-                const currentKorban = dataContainer.getAttribute('data-current-korban');
-                const currentKonselor = dataContainer.getAttribute('data-current-konselor');
-                const currentLayanan = dataContainer.getAttribute('data-current-layanan');
+                const currentNamaPendamping = dataContainer.getAttribute('data-current-nama-pendamping');
                 const oldJenisLayanan = dataContainer.getAttribute('data-old-jenis-layanan');
-                const oldNamaKonselor = dataContainer.getAttribute('data-old-nama-konselor');
+                const oldNamaPendamping = dataContainer.getAttribute('data-old-nama-pendamping');
 
                 function updateKorbanOptions() {
                     const selectedPengaduanId = pengaduanSelect.value;
@@ -234,8 +184,8 @@
                                     const option = document.createElement('option');
                                     option.value = korban.id;
                                     option.textContent = korban.nama;
-                                    // Set selected jika ini adalah korban yang sedang diedit
-                                    if (korban.id == currentKorban) {
+                                    // Set selected if it's the current korban for this pendampingan
+                                    if (korban.id == currentKorbanId) {
                                         option.selected = true;
                                     }
                                     korbanSelect.appendChild(option);
@@ -249,12 +199,12 @@
                     }
                 }
 
-                function updateNamaKonselorOptions() {
+                function updateNamaPendampingOptions() {
                     const selectedLayanan = jenisLayananSelect.value;
                     
-                    // Reset nama konselor dropdown
-                    namaKonselorSelect.innerHTML = '<option value="">Pilih Nama Konselor</option>';
-                    namaKonselorSelect.disabled = true;
+                    // Reset nama pendamping dropdown
+                    namaPendampingSelect.innerHTML = '<option value="">Pilih Nama Pendamping</option>';
+                    namaPendampingSelect.disabled = true;
 
                     if (selectedLayanan) {
                         // Filter instruktur berdasarkan nama_layanan yang sama dengan jenis_layanan yang dipilih
@@ -268,27 +218,64 @@
                                 const option = document.createElement('option');
                                 option.value = instruktur.nama;
                                 option.textContent = instruktur.nama + ' - ' + instruktur.posisi;
-                                // Set selected jika ini adalah konselor yang sedang diedit atau old value
-                                if (instruktur.nama === currentKonselor || instruktur.nama === oldNamaKonselor) {
+                                
+                                // Set selected if it's the current nama pendamping or old value
+                                if (instruktur.nama === currentNamaPendamping || instruktur.nama === oldNamaPendamping) {
                                     option.selected = true;
                                 }
-                                namaKonselorSelect.appendChild(option);
+                                
+                                namaPendampingSelect.appendChild(option);
                             });
-                            namaKonselorSelect.disabled = false;
+                            namaPendampingSelect.disabled = false;
                         } else {
                             // Tidak ada instruktur untuk layanan ini
-                            namaKonselorSelect.innerHTML = '<option value="">Tidak ada konselor untuk layanan ini</option>';
+                            namaPendampingSelect.innerHTML = '<option value="">Tidak ada pendamping untuk layanan ini</option>';
                         }
                     }
                 }
 
-                pengaduanSelect.addEventListener('change', updateKorbanOptions);
-                jenisLayananSelect.addEventListener('change', updateNamaKonselorOptions);
+                // Format waktu dengan WIB (24 jam)
+                function formatWaktuIndonesia(waktu) {
+                    if (!waktu) return '';
+                    return `${waktu} WIB`;
+                }
 
-                // Initial call on page load
+                // Event listener untuk format waktu
+                waktuInput.addEventListener('change', function() {
+                    const waktu = this.value;
+                    const waktuFormatted = formatWaktuIndonesia(waktu);
+                    
+                    // Tampilkan format Indonesia di bawah input
+                    let displayElement = document.getElementById('waktu-display');
+                    if (!displayElement) {
+                        displayElement = document.createElement('div');
+                        displayElement.id = 'waktu-display';
+                        displayElement.className = 'mt-1 text-sm text-blue-600 font-medium';
+                        this.parentNode.appendChild(displayElement);
+                    }
+                    
+                    if (waktuFormatted) {
+                        displayElement.textContent = `Waktu yang dipilih: ${waktuFormatted}`;
+                    } else {
+                        displayElement.textContent = '';
+                    }
+                });
+
+                pengaduanSelect.addEventListener('change', updateKorbanOptions);
+                jenisLayananSelect.addEventListener('change', updateNamaPendampingOptions);
+
+                // Initial call on page load to set correct korban and nama pendamping for existing data
                 updateKorbanOptions();
-                updateNamaKonselorOptions();
+                updateNamaPendampingOptions();
+
+                // Trigger waktu format on page load
+                setTimeout(function() {
+                    waktuInput.dispatchEvent(new Event('change'));
+                }, 100);
             });
         </script>
     @endpush
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </x-app-layout> 

@@ -13,30 +13,39 @@ use Illuminate\Validation\Rule;
 
 class KonselingController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user();
+public function index()
+{
+    $user = Auth::user();
+    // dd($user->role);
 
-        if (!$user) {
-            $konselings = collect();
-            return view('konseling.index', compact('konselings'));
-        }
+    // Jika belum login, tampilkan halaman kosong
+    if (!$user) {
+        $konselings = collect();
+        return view('konseling.index', compact('konselings'));
+    }
 
-        if ($user->role === 'staff') {
-            $konselings = Konseling::with(['pengaduan', 'korban'])
-                ->orderBy('jadwal_konseling', 'desc')
-                ->get();
-        } else {
-            $konselings = Konseling::whereHas('pengaduan', function($query) use ($user) {
+    // Ambil data konseling berdasarkan role
+    if ($user->role === 'staff') {
+        $konselings = Konseling::with(['pengaduan', 'korban'])
+            ->orderBy('jadwal_konseling', 'desc')
+            ->get();
+    } else {
+        $konselings = Konseling::whereHas('pengaduan', function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
             ->with(['pengaduan', 'korban'])
             ->orderBy('jadwal_konseling', 'desc')
             ->get();
-        }
-
-        return view('konseling.index', compact('konselings'));
     }
+
+    // Tampilkan view berdasarkan role
+    return match ($user->role) {
+        'staff' => view('konseling_staff_dinas.index', compact('konselings')),
+        'pelapor' => view('konseling.index', compact('konselings')),
+        default => abort(403, 'Unauthorized access'),
+    };
+}
+
 
     public function create()
     {

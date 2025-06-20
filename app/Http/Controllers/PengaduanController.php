@@ -14,10 +14,21 @@ use Illuminate\Support\Facades\DB;
 
 class PengaduanController extends Controller
 {
-    public function index(){
-        // dd();
-        return view('pengaduan_staf_dinas.index');
+   public function index()
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return redirect()->route('login');
     }
+
+    return match ($user->role) {
+        'staff' => view('pengaduan_staf_dinas.index'),
+        'pelapor' => view('pengaduan.index'),
+        default => abort(403, 'Unauthorized access'),
+    };
+}
+
     // Menampilkan form pengaduan dan memilih kota
     public function create()
     {

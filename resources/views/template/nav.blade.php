@@ -90,8 +90,8 @@
                 @guest
                     <a href="{{ route('login') }}"
                         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</a>
-                    <a href="{{ route('profile.edit') }}"
-                        class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">Profile</a>
+                    <a href="{{ route('register') }}"
+                        class="bg-blue-400 text-white px-6 py-2 rounded hover:bg-blue-500 transition">Register</a>
                 @endguest
 
                 @auth
